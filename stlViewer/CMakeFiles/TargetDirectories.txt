@@ -1,0 +1,6 @@
+/Users/weiyang/code/stlViewer/CMakeFiles/rebuild_cache.dir
+/Users/weiyang/code/stlViewer/CMakeFiles/edit_cache.dir
+/Users/weiyang/code/stlViewer/CMakeFiles/package_source.dir
+/Users/weiyang/code/stlViewer/CMakeFiles/package.dir
+/Users/weiyang/code/stlViewer/CMakeFiles/stlViewer.dir
+/Users/weiyang/code/stlViewer/CMakeFiles/stlViewer_autogen.dir

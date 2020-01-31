@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>天气预报查询</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <style type="text/css">
+        #weather {
+            height: 180px;
+            background-color: #fff;
+            padding-left: 10px;
+            padding-right: 10px;
+            position: absolute;
+            bottom: 20px;
+            font-size: 12px;
+            right: 10px;
+            border-radius: 3px;
+            line-height: 20px;
+            border: 1px solid #ccc;
+        }
+        .weather{
+            width: 60px;
+            padding-left: 8px;
+            display: inline-block;
+        }
+    	.city {
+        	color: #333;
+        	padding: 6px;
+        	border: 1px solid silver;
+        	box-shadow: 3px 4px 3px 0px silver;
+        	position: absolute;
+        	background-color: #eee;
+        	top: 500px;
+        	left: 10px;
+        	border-radius: 5px;
+        	overflow: hidden;
+        	line-height: 20px;
+    	}
+    	#result {
+        	color: #333;
+        	padding: 6px;
+        	border: 1px solid silver;
+        	box-shadow: 3px 4px 3px 0px silver;
+        	position: absolute;
+        	background-color: #eee;
+        	top: 400px;
+        	right: 10px;
+        	border-radius: 5px;
+        	overflow: hidden;
+        	line-height: 20px;
+    	}
+    </style>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key="></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="tip" style="line-height: 24px"></div>
+<div class ='city'>
+     输入城市名:</br>
+     <input id = 'input' value=""></input>
+     <button type="button" id="sureButton" onclick="myclick()">确定</button>
+     <br><font size="2px">（比如，北京）</font>
+</div>
+
+<div id ='result' style="line-height: 24px">
+</div>
+
+<script type="text/javascript">
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom: 4
+    });
+    var weather;
+    var str = [];
+    var infoWin;
+    var city;
+    var weatherPara = 0;
+    var windpowerPara = 0;
+    
+    function myclick() {
+        city = document.getElementById('input').value;    
+        AMap.service('AMap.Weather', function() {
+        weather = new AMap.Weather();      
+        //查询实时天气信息, 查询的城市到行政级别的城市，如朝阳区、杭州市
+        weather.getLive(city, function(err, data) {
+            if (!err) {
+                var str = [];
+                str.push('<div style="color: #3366FF;">实时天气' + '</div>');
+                str.push('<div>城市/区：' + data.city + '</div>');
+                str.push('<div>天气：' + data.weather + '</div>');
+                if(data.weather == '晴' ||  data.weather == '多云') weatherPara = 0;
+                else if (data.weather == '阴') weatherPara = 1;
+                else weatherPara = 2;
+                		
+                str.push('<div>温度：' + data.temperature + '℃</div>');
+                str.push('<div>风向：' + data.windDirection + '</div>');
+                str.push('<div>风力：' + data.windPower + ' 级</div>');
+                if(data.windPower < 5) windpowerPara = 0;
+                else if(data.windPower == 5) windpowerPara = 1;
+                else windpowerPara = 2;
+                
+                str.push('<div>空气湿度：' + data.humidity + '</div>');
+                str.push('<div>发布时间：' + data.reportTime + '</div>');
+    				 var infoWin = new AMap.InfoWindow({
+                //var marker = new AMap.Marker({map: map, position: map.getCenter()});
+                    content: str.join(''),
+                    offset: new AMap.Pixel(300, 0)
+                });
+                infoWin.open(map, map.getCenter()); //map.getCenter());
+             }
+        });
+        //未来4天天气预报
+        weather.getForecast(city, function(err, data) {
+            if (err) {return;}
+            var str = [];
+            for (var i = 0,dayWeather; i < data.forecasts.length; i++) {
+                dayWeather = data.forecasts[i];
+                str.push(dayWeather.date+' <div class="weather">'+dayWeather.dayWeather+'</div> '+ dayWeather.nightTemp + '~' + dayWeather.dayTemp + '℃');
+            }
+            document.getElementById('tip').innerHTML = str.join('<br>');
+        });
+    });
+    var maxNum = 0;
+    maxNum = maxNum>weatherPara ? maxNum:weatherPara;
+    maxNum = maxNum>windpowerPara ? maxNum:windpowerPara;
+	var str;
+    if(maxNum == 0){
+    	str = "此刻适合外出";
+    } 
+    else if(maxNum == 0) str = "谨慎决定外出";
+    else str = "不建议外出";
+    document.getElementById('result').innerHTML = "<font color='red'><b>" + str + "</b></font>"
+    }
+</script>
+</body>
+</html>

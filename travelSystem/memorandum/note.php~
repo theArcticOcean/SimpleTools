@@ -1,0 +1,24 @@
+<title>备忘录</title>
+<body background="note.png" style=" background-repeat:no-repeat ;
+background-size:100% 100%;  background-attachment: fixed;" >
+<h1><a href="#">中文博客--基于PHP<sup></sup></a></h1>
+</body>
+<?php  
+    $conn=@mysql_connect("localhost","root","19941212") or die(mysql_error());  
+    @mysql_select_db("db_study",$conn) or die(mysql_error());  
+    //mysql_query("set names 'GBK'");  // 用于正常显示中文  
+    mysql_query("set names 'UTF8'"); // 用于正常插入中文
+    $sql="select * from students";  
+    $result=mysql_query($sql,$conn);  
+    $rnum=mysql_num_rows($result);  
+    echo "here are informations: ".$rnum."<br>";  
+
+    while($row=mysql_fetch_array($result)){  // mysql_fetch_array 可以用字段作为索引   
+        echo "sno: ".$row['sno'].", sname: ".$row['sname']."<br>";  
+    }    
+    //$sql = "INSERT INTO `students` VALUES ('20130007','哈哈')";  
+    //@mysql_query($sql,$conn) or die(mysql_error());  
+    mysql_close();   
+
+?>  
+

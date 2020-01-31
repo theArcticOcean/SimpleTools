@@ -1,0 +1,30 @@
+<head>
+<meta charset="utf-8">
+<title>备忘录</title>
+<style> 
+body{ text-align:center} 
+.info{ 
+	position: absolute;
+    background-color: transparent;
+    left: 50%;
+    top: 50%;
+}  
+</style> <img src="note.PNG" alt="" />
+</head>
+<body background="note.PNG" style=" background-repeat:no-repeat ;
+background-size:100% 100%;  background-attachment: fixed;" >
+<script type="text/javascript">
+	 function register(){ 
+        window.open('register.html','register'); 
+    }
+</script>
+
+<div class="info">
+<form name="loginForm" method="post" action="login.php" >
+用户名：<input type="text" name="username"/> <br>
+密  码：<input type="password" name="password"/> <br>
+<input type="submit" name="submit" value="登陆"/>
+<input type="button" name="registe" onclick="register()" value="注册">
+</div>
+</form>
+</body>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>around_search</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <style type="text/css">
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+            border-bottom: solid 1px silver;
+        }
+    </style>
+    <script type="text/javascript" 
+    src="http://webapi.amap.com/maps?v=1.3&key="></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style type="text/css">
+    .search {
+        color: #333;
+        padding: 6px;
+        border: 1px solid silver;
+        box-shadow: 3px 4px 3px 0px silver;
+        position: absolute;
+        background-color: #eee;
+        top: 500px;
+        left: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        line-height: 20px;
+    }
+    </style>
+
+</head>
+<body>
+<div id="container"></div>
+<div id="panel"></div>
+<div id="tip"></div>
+
+<div class ='search'>
+ <form name="form1" method="post" action="">
+   <input type="checkbox" name="checkbox" value="餐饮服务">
+   餐饮服务
+   <input type="checkbox" name="checkbox" value="购物服务">
+   购物服务
+   <input type="checkbox" name="checkbox" value="体育休闲服务">
+   体育休闲服务<br>
+   <input type="checkbox" name="checkbox" value="医疗保健服务">
+   医疗保健服务
+   <input type="checkbox" name="checkbox" value="住宿服务">
+   住宿服务
+   <input type="checkbox" name="checkbox" value="风景名胜">
+   风景名胜<br>
+   <input type="checkbox" name="checkbox" value="交通设施服务">
+   交通设施服务
+   <input type="checkbox" name="checkbox" value="地名地址信息">
+   地名地址信息
+   <input type="checkbox" name="checkbox" value="公共设施">
+   公共设施<br>
+ </form>
+
+<button onclick="check()">确定</button>
+<button onclick="myclear()">清空面板</button>
+</div>
+
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true
+    });
+    var placeSearch;
+    var geolocation;
+    var cpoint;
+    map.plugin('AMap.Geolocation', function() {
+        geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            buttonPosition:'RB'
+        });
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
+    function onError(data) {
+        document.getElementById('tip').innerHTML = '定位失败';
+    }
+    function onComplete(data) {
+        cpoint = [data.position.getLng(), data.position.getLat()];
+        //alert(cpoint);
+    }
+    
+    AMap.service(["AMap.PlaceSearch"], function() {
+        placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+            pageSize: 5,
+            type: '',
+            pageIndex: 1,
+            city: "010", //城市
+            map: map,
+            panel: "panel"
+        });
+    });
+    var v = 0;
+    function check(){
+        var result = document.getElementsByTagName("input");
+        var resultValue="";
+        var i;
+        for (i = 0; i < result.length ; i ++ )
+        {
+            if(result[i].type == "checkbox" && result[i].checked){
+                resultValue +=result[i].value+"|";
+            }
+        }
+        resultValue=resultValue.substring(0,resultValue.length-1);
+        placeSearch.type = resultValue;
+        //alert(placeSearch.type);
+        //cpoint = [116.405467, 39.907761];
+        placeSearch.searchNearBy('', cpoint, 2000, function(status, result) {});
+    }
+    document.getElementById('panel').innerHTML = 1;
+    function myclear(){
+        //alert("clear");
+        document.getElementById('panel').innerHTML = ""; 
+    }
+</script>
+</body>
+</html>

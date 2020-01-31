@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>travel_path</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key="></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+<style type="text/css">
+#mybutton {
+    display:block;
+    float: right;
+    width:25%
+}
+#container{
+    display:block;
+    width:75%;
+    float:left;
+}
+#introduct{
+    background-color: rgb(230, 230, 230);
+    font-family:SimSun;
+    font-size:14px;
+}
+</style>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:11,
+        center: [116.397428, 39.90923]
+        
+    });
+    function bus_line(){ 
+        window.open('bus_line.html','bus_line'); 
+    }
+    function bus_station() {
+        window.open('bus_station.html','bus_station'); 
+    }
+    function otherWays() {
+        window.open('otherWays.html','otherWays'); 
+    }
+</script>
+<div id="mybutton">
+<ul> 
+    <li>公交出行</li>
+        <ul>
+            <li>
+            <button id="i_bus_line" onclick="bus_line()">公交线路</button><br>
+            <div id="introduct">
+            在网页的左下角输入起点和终点，点击查询路线，在右上角会出现结果列表。因为获取周围热点时因定位方式的不同结果的差异较大，所以设计成用户自己输入起点，而不是“我的位置”。
+            </div><br>
+            </li>
+
+            <li>
+            <button id="i_bus_station" onclick="bus_station()">公交站点</button><br>
+            <div id="introduct">
+            地图自动定位，网页左下角用于输入公交站点关键字，右上角是查询的结果统计，地图中会出现站点的点标记。每一次输入新的站点，查询结果自动更新。如果没有站点结果，会弹出相应的提示信息。
+            </div><br>
+            </li>
+        </ul>
+    
+    <li>
+        <button id="i_otherWays" onclick="otherWays()">非公交出行</button><br>
+        <div id="introduct">
+        为便于用户的使用，将步行，驾车，骑行的三种方式统一到一个网页，使用预定义下拉列表的方式来路线规划.
+        </div>
+        <br>
+    </li>
+    <ul>
+        <li>
+        <div id="introduct">
+        步行出行: 系统会自动定位城市，用户输入出发地点和目的地点，点击确定按钮后网页右边面板上会出现规划结果。假设定位失败，会有错误信息提示。    
+        </div><br>
+        </li>
+        
+        <li>
+        <div id="introduct">
+        驾车出行: 和步行出行类似，我们在左下角输入起点和终点后，系统会在右上角给出回话路线。可以多次查询，下一次的查询结果会自动覆盖上一次的查询结果。    
+        </div><br>
+        </li>
+
+        <li>
+        <div id="introduct">
+        骑行出行：同上。
+        </div><br>
+        </li>
+    </ul>
+</ul>
+</div>
+</body>
+</html>

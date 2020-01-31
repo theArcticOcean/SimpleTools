@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>非公交出行</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <style type="text/css">
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+        #tip {
+            position: fixed;
+            background-color: transparent;
+            max-height: 10%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+        .wordPanel {
+            color: #333;
+            padding: 6px;
+            border: 1px solid silver;
+            box-shadow: 3px 4px 3px 0px silver;
+            position: absolute;
+            background-color: #eee;
+            bottom: 10px;
+            left: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            line-height: 20px;
+        } 
+    </style>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=&plugin=AMap.CitySearch,AMap.Driving,AMap.Walking,AMap.Riding"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="panel"></div>
+<div id="tip"></div>
+<div class ='wordPanel'>
+起点：<input id = 'input1' value=""></input>
+终点：<input id = 'input2' value=""></input>
+<select name="ways" id="ways">
+<option value="drive" selected>驾车</option>
+<option value="walk">步行</option>
+<option value="ride">骑行</option>
+</select>
+<button type="button" id="sureButton" onclick="Search()">查询路线</button>
+</div>
+
+<script type="text/javascript">
+    //基本地图加载
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        zoom: 13 //地图显示的缩放级别
+    });
+    var cityName;
+    var citysearch = new AMap.CitySearch();
+    citysearch.getLocalCity(function(status, result) {
+        if (status === 'complete' && result.info === 'OK') {
+            if (result && result.city && result.bounds) {
+                cityName = result.city;
+            }
+        } 
+        else {
+            document.getElementById('tip').innerHTML = result.info;
+        }
+    });
+
+    // 驾车导航
+    var driving = new AMap.Driving({
+        map: map,
+        panel: "panel"
+    }); 
+    function driveSearch(){
+        var key1 = document.getElementById('input1').value;
+        var key2 = document.getElementById('input2').value;
+        driving.search([
+            {keyword: key1,city:cityName},
+            {keyword: key2,city:cityName}
+        ]);
+    }
+
+    //步行导航
+    var walking = new AMap.Walking({
+        map: map,
+        panel: "panel"
+    }); 
+    function walkSearch(){
+        var key1 = document.getElementById('input1').value;
+        var key2 = document.getElementById('input2').value;
+        walking.search([
+            {keyword: key1,city:cityName},
+            {keyword: key2,city:cityName}
+        ]);
+    }        
+
+     //骑行导航
+    var riding = new AMap.Riding({
+        map: map,
+        panel: "panel"
+    }); 
+    function rideSearch(){
+        var key1 = document.getElementById('input1').value;
+        var key2 = document.getElementById('input2').value;
+        riding.search([
+            {keyword: key1,city:cityName},
+            {keyword: key2,city:cityName}
+        ]);
+    }
+
+    function Search(){
+        var contents = document.getElementById('ways');
+        var str = contents.options[contents.selectedIndex].value;
+        //alert(str);
+        driving.clear();   // clear results got before.
+        walking.clear();
+        riding.clear();
+
+        switch (str)
+        {
+            case "drive":
+            driveSearch();
+            break;
+            case "walk":
+            walkSearch();
+            break;
+            case "ride":
+            rideSearch();
+            break;
+        }
+    }
+</script>
+</body>
+</html>

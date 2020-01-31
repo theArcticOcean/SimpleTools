@@ -1,0 +1,4 @@
+/Users/weiyang/pro/stlViewer/qt-stlViewer-Default/CMakeFiles/rebuild_cache.dir
+/Users/weiyang/pro/stlViewer/qt-stlViewer-Default/CMakeFiles/edit_cache.dir
+/Users/weiyang/pro/stlViewer/qt-stlViewer-Default/CMakeFiles/stlViewer.dir
+/Users/weiyang/pro/stlViewer/qt-stlViewer-Default/CMakeFiles/stlViewer_autogen.dir

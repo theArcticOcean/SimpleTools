@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>transpotion-custom</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key="></script>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style type="text/css">
+    #result {
+          color: #333;
+          padding: 6px;
+          border: 1px solid silver;
+          box-shadow: 3px 4px 3px 0px silver;
+          position: absolute;
+          background-color: #eee;
+          top: 200px;
+          right: 10px;
+          border-radius: 5px;
+          overflow: hidden;
+          line-height: 20px;
+    }  
+    #enter {
+        color: #333;
+        padding: 6px;
+        border: 1px solid silver;
+        box-shadow: 3px 4px 3px 0px silver;
+        position: absolute;
+        background-color: #eee;
+        top: 500px;
+        right: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        line-height: 20px;
+    }
+    #button {
+        color: #333;
+        padding: 6px;
+        border: 1px solid silver;
+        box-shadow: 3px 4px 3px 0px silver;
+        position: absolute;
+        background-color: #eee;
+        top: 500px;
+        left: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        line-height: 20px;
+    }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id = "result" style="line-height: 24px"> </div>
+<div id="enter">
+  城市：<input id="city" value=""><br>
+  街道：<input id="stress" value="">
+</div> 
+
+<script language="javascript">
+  var mapObj = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom: 4
+  });
+
+  function check() {
+    var city = document.getElementById('city').value;
+    var pattern = new RegExp("市$");
+    if(pattern.test(city) == true){
+      city = city.substring(0,city.length-1);
+    }   
+    var stress = document.getElementById('stress').value;
+    /* http://restapi.amap.com/v3/traffic/status/road?name=北环大道&city=深圳市&key=<用户的key> */      
+    var API = "http://restapi.amap.com/v3/traffic/status/road?name=";
+    API = API + stress + "&city=" + city + "&key=";
+
+    $.getJSON(API, { }) 
+    .done(function(data){
+      if(data.status == '0'){
+        document.getElementById('result').innerHTML = "<font color='red'><b>抱歉，我们无法获得这片区域的路况数据</b></font>";
+        return ;
+      }
+      var subData = data.trafficinfo;
+      var descStr = subData.description;       // 路况综述
+
+      var evaluation = subData.evaluation;
+      var congested = evaluation.congested;    // 拥堵百分比
+      var evaluStr = evaluation.description;   // 道路描述
+      var expedite = evaluation.expedite;      //  畅通百分比
+      var status = evaluation.status;          //  路况
+
+      var str = '路况综述<br>'+ descStr + '<br>' + '拥堵百分比: '+ congested + '<br>';
+      str = str + '道路描述: ' + evaluStr + '<br>';
+      str = str + '畅通百分比: ' + expedite + '<br>';
+
+      var statusStr;
+      switch(status){
+        case '0':
+        statusStr = '未知';
+        break;
+        case '1':
+        statusStr = '畅通';
+        break;
+        case '2':
+        statusStr = '缓行';
+        break;
+        case '3':
+        statusStr = '拥堵';
+        break;
+      }
+
+      str = str + '路况: ' + statusStr + '<br>';
+      document.getElementById('result').innerHTML = "<b>" + str + "</b>";
+    });
+  }
+  function myclear(){
+    document.getElementById('city').value = '';
+    document.getElementById('stress').value = '';
+    document.getElementById('result').innerHTML = "";
+  }
+</script>
+<div id="button">
+<button onclick="check()" id="button1">交通态势查询</button><br>
+<button onclick="myclear()" id="button2">清除数据</button>
+</div>
+</BODY>
+</HTML>

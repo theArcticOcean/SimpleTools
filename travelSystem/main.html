@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>出行自助导航系统</title>
+</head>
+<body background="garden.jpg" style=" background-repeat:no-repeat ;
+background-size:100% 100%;  background-attachment: fixed;" >
+
+<img src="./picTMP/f1.png" width="60" height="60">
+<img src="./picTMP/f2.png" width="60" height="60">
+<img src="./picTMP/f3.png" width="60" height="60">
+<img src="./picTMP/f4.png" width="60" height="60">
+<img src="./picTMP/f5.png" width="60" height="60">
+<img src="./picTMP/f6.png" width="60" height="60">
+<img src="./picTMP/f7.png" width="60" height="60">
+<img src="./picTMP/f8.png" width="60" height="60">
+<img src="./picTMP/f9.png" width="60" height="60">
+<img src="./picTMP/f10.png" width="60" height="60">
+<img src="./picTMP/f11.png" width="60" height="60">
+<img src="./picTMP/f12.png" width="60" height="60">
+
+<div class="info" id="buttons">
+<button id="button1" onclick="weather()">天气查询</button>
+<button id="button2" onclick="traffic_status()">交通路况</button>
+<button id="button3" onclick="POI_search()">POI搜索</button>
+<button id="button4" onclick="urban_navigation()">城区导航</button><br>
+<button id="button5" onclick="travel_path()">出行路线</button>
+<button id="button6" onclick="one_key_search()">一键查询</button>
+<button id="button7" onclick="intelligent_location()">智能定位</button>
+<button id="button8" onclick="memorandum()">备忘录</button>
+<div>
+
+<script type="text/javascript" >
+i=0; 
+DI=document.images; 
+DIL=DI.length; 
+var width = document.body.scrollWidth;
+var height = document.body.scrollHeight;
+function A(){
+	for(var index=0;index<DIL;index++){
+		DIS=DI[index].style; 
+		DIS.position='absolute'; 
+		var speed = 0.005;
+		var interV = 2*Math.PI/speed/DIL;
+		DIS.left = Math.sin(i*speed+index*interV*speed)*(width/3)+width/2;		// the speed is change's range
+		DIS.top = Math.cos(i*speed+index*interV*speed)*(height/3)+height/2;
+	}
+	i++;
+}
+setInterval('A()',10); 	//set moving speed for eyes
+
+var global_str = "http://localhost/project2";
+function one_key_search() {
+	location = global_str + "/one_key_search/main.html";
+}
+function POI_search() {
+	location = global_str + "/POI_search/main.html";
+}
+function intelligent_location(){
+    location = global_str + "/intelligent_location/main.html";	
+}
+function memorandum(){
+	location = global_str + "/memorandum/main.html";
+}
+function traffic_status(){
+	location = global_str +"/traffic_status/main.html";
+}
+function weather(){
+	location = global_str +"/weather/weather.html";
+}
+function urban_navigation(){
+	location = global_str + "/urban_navigation/main.html";
+}
+function travel_path(){
+	location = global_str + "/travel_path/main.html";
+}
+
+var buttons = document.getElementById("buttons");
+buttons.style.position = 'absolute'; 
+buttons.style.left = width/2-width/10;
+buttons.style.top = height/2;
+</script>
+</body>
+</html>

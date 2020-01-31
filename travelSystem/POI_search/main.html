@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>POI_search</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key="></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+<style type="text/css">
+#mybutton {
+    display:block;
+    float: right;
+    width:10%
+}
+#container{
+    display:block;
+    width:90%;
+    float:left;
+}
+#introduct{
+    background-color: rgb(230, 230, 230);
+    font-family:SimSun;
+    font-size:14px;
+}
+</style>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:11,
+        center: [116.397428, 39.90923]
+        
+    });
+    function around_search(){ 
+        window.open('around_search.html','around_search'); 
+    }
+    function key_word_search() {
+        window.open('key_word_search.html','key_word_search'); 
+    }
+    function polygon_search() {
+        window.open('polygon_search.html','polygon_search'); 
+    }
+</script>
+<div id="mybutton">
+<button id="i_around_search" onclick="around_search()">周边搜索</button><br>
+    <div id="introduct">
+    网页左下角有多选框，当用户选定一些热点关键字后点击确定就可以得到一些热点地址，右上角会显示结果，5个一页。当用户点击清空面板后，缓存的热点地址则会消失。
+    </div><br>
+<button id="i_key_word_search" onclick="key_word_search()">关键字搜索</button><br>
+    <div id="introduct">
+    网页的左下角是搜索的输入框，点击确定按钮后右上角产生一系列的搜索结果，每5个一页。当我们点击结果的点标记时，会有相应的详细信息提示框。
+    </div><br>
+<button id="i_polygon_search" onclick="polygon_search()">多边形搜索</button><br>
+    <div id="introduct">
+    鼠标左击可以在地图中获得点的经纬度位置，点的位置信息会显示在左下角的浮板上。输入关键字配置搜索的对象。点击多边形搜索后用户选择的点成为绘制多边形的顶点，在多边形的范围内会搜索包含关键词的对象，结果显示在右上角的浮板上。
+    </div><br>
+</div>
+</body>
+</html>

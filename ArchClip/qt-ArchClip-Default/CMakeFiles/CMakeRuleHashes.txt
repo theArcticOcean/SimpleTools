@@ -1,3 +1,0 @@
-# Hashes of file build rules.
-618dcdbf3735a147b6b47b23569b13eb CMakeFiles/ArchClip_autogen
-ae21f2c3d2aac7601ea16c599c24e7d4 ui_widget.h

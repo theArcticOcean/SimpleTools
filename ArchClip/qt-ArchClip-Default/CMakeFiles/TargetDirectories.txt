@@ -1,4 +1,0 @@
-/Users/weiyang/pro/ArchClip/qt-ArchClip-Default/CMakeFiles/rebuild_cache.dir
-/Users/weiyang/pro/ArchClip/qt-ArchClip-Default/CMakeFiles/edit_cache.dir
-/Users/weiyang/pro/ArchClip/qt-ArchClip-Default/CMakeFiles/ArchClip.dir
-/Users/weiyang/pro/ArchClip/qt-ArchClip-Default/CMakeFiles/ArchClip_autogen.dir

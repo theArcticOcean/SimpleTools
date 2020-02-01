@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<RCC>
-    <qresource prefix="/">
-        <file alias="Images/logo.ico">../Images/logo.ico</file>
-        <file alias="Images/logo.icns">../Images/logo.icns</file>
-        <file alias="Images/wait1.png">../Images/wait1.png</file>
-    </qresource>
-</RCC>

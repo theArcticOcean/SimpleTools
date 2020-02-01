@@ -1,0 +1,13 @@
+{
+    "title": "Gifer Installer",
+    "icon": "Images/logo.icns",
+    "background": "Images/back.png",
+    "icon-size": 80,
+    "contents": [
+        { "x": 100, "y": 120, "type": "file", "path": "Gifer.app" },
+        { "x": 400, "y": 120, "type": "link", "path": "/Applications" }
+    ],
+    "window": {
+        "size": { "width": 500, "height": 300 }
+    }
+}

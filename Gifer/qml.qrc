@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Qml/main.qml</file>
+        <file>Qml/GifWindow.qml</file>
+        <file>Qml/waitWindow.qml</file>
+        <file>Images/logo.ico</file>
+        <file>Images/logo.icns</file>
+        <file>Images/wait1.png</file>
+    </qresource>
+</RCC>

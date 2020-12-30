@@ -5,12 +5,11 @@ const SPEED = 7
 const ACCELERATION = 3
 const DE_ACCELERATION = 5
 var velocity = Vector3(0, 0, 0)
-var cam : Camera
 var nothing_pressed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	cam = $target/Camera
+	pass
 
 func _input( event ):
 	if event.is_pressed():
@@ -22,10 +21,10 @@ func _physics_process( delta ):
 	if Input.is_action_pressed("turn_head"):
 		if Input.is_action_pressed( "move_left" ):
 			rotate_y( PI/180 )
-			cam.rotate_y( PI/180 )
+			$Camera.rotate_y( PI/180 )
 		elif Input.is_action_pressed( "move_right" ):
 			rotate_y( -PI/180 )
-			cam.rotate_y( -PI/180 )
+			$Camera.rotate_y( -PI/180 )
 
 		return
 

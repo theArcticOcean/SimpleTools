@@ -29,7 +29,7 @@ func _physics_process( delta ):
 
 		return
 
-	var cameraTrans:Transform = $target/Camera.get_global_transform()
+	var cameraTrans:Transform = $Camera.get_global_transform()
 	var vec = Vector3(0, 0, 0)
 	vec.x = Input.get_action_strength( "move_right" ) - Input.get_action_strength( "move_left" )
 	vec.z = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
@@ -46,7 +46,6 @@ func _physics_process( delta ):
 	# avoid change too fast, create smooth effect.
 	var horizontalVec = velocity
 	horizontalVec.y = 0
-	print( horizontalVec )
 	var acceleration
 	if vec.dot( horizontalVec ) > 0:
 		acceleration = ACCELERATION

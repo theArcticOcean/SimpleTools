@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://music/explose.ogg" type="AudioStream" id=1]
+
+[node name="musics" type="Node"]
+
+[node name="explose" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_size = 29.9
+max_db = 3.526
+max_distance = 100.0

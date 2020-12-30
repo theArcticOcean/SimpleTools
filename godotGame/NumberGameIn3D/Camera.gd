@@ -10,7 +10,7 @@ var player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player = get_parent().get_parent()
+	player = get_parent()
 	set_as_toplevel( true )
 	last_player_pos = player.global_transform.origin
 

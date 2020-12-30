@@ -51,11 +51,8 @@ material/0 = SubResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.095, 2.072, 0 )
 shape = SubResource( 5 )
 
-[node name="target" type="Spatial" parent="player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.354, 0 )
-
-[node name="Camera" type="Camera" parent="player/target"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.228, 0 )
+[node name="Camera" type="Camera" parent="player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.582, 0 )
 doppler_tracking = 2
 fov = 96.3
 near = 0.06

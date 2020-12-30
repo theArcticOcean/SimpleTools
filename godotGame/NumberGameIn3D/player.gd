@@ -5,13 +5,23 @@ const SPEED = 7
 const ACCELERATION = 3
 const DE_ACCELERATION = 5
 var velocity = Vector3(0, 0, 0)
-var cam
+var cam : Camera
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cam = $target/Camera
 
 func _physics_process(delta):
+	if Input.is_action_pressed("turn_head"):
+		if Input.is_action_pressed( "move_left" ):
+			rotate_y( PI/180 )
+			cam.rotate_y( PI/180 )
+		elif Input.is_action_pressed( "move_right" ):
+			rotate_y( -PI/180 )
+			cam.rotate_y( -PI/180 )
+
+		return
+
 	var cameraTrans:Transform = $target/Camera.get_global_transform()
 	var vec = Vector3(0, 0, 0)
 	vec.x = Input.get_action_strength( "move_right" ) - Input.get_action_strength( "move_left" )
@@ -23,10 +33,7 @@ func _physics_process(delta):
 		vec /= vec.length()
 	
 	velocity.y += delta*gravity
-	"""var tmp = vec * SPEED
-	velocity.x = tmp.x
-	velocity.z = tmp.z"""
-	
+
 	# avoid change too fast, create smooth effect.
 	var horizontalVec = velocity
 	horizontalVec.y = 0
@@ -38,6 +45,9 @@ func _physics_process(delta):
 		acceleration = DE_ACCELERATION
 
 	var targetVec = vec * SPEED
+	if Input.is_action_pressed("speed_up"):
+		targetVec = targetVec * 3
+
 	horizontalVec = horizontalVec.linear_interpolate( targetVec, acceleration * delta )
 	velocity.x = horizontalVec.x
 	velocity.z = horizontalVec.z
@@ -46,6 +56,3 @@ func _physics_process(delta):
 
 	if Input.is_action_pressed("jump"):
 		velocity.y -= delta * gravity * 3
-	if Input.is_action_pressed("turn_head"):
-		rotate_y( PI/180 )
-		cam.rotate_y( PI/180 )

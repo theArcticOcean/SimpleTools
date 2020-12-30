@@ -20,8 +20,7 @@ func _physics_process(delta):
 	var vec = target_pos - last_player_pos
 	global_transform.origin += vec
 	last_player_pos = target_pos
-	#look_at_from_position( camera_pos, target_pos, Vector3.UP ) #Vector3.UP )
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

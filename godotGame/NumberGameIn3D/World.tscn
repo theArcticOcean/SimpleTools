@@ -55,8 +55,11 @@ shape = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.354, 0 )
 
 [node name="Camera" type="Camera" parent="player/target"]
-transform = Transform( 1, 0, 0, 0, 0.898695, 0.438575, 0, -0.438575, 0.898695, 0.455405, 1.78507, 6.50313 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.228, 0 )
 doppler_tracking = 2
+fov = 96.3
+near = 0.06
+far = 62.7
 script = ExtResource( 7 )
 
 [node name="land" parent="." instance=ExtResource( 5 )]

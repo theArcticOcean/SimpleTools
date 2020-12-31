@@ -15,7 +15,8 @@ func _process(delta):
 		 $FallStone/MeshInstance.queue_free()
 
 func _physics_process( delta ):
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("test_key"):
+		print( "test..." )
 		var player:AudioStreamPlayer3D = musicContainer.get_node( "explose" ).duplicate()
 		player.stream = player.stream.duplicate()
 		player.stream.loop = false

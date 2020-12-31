@@ -6,6 +6,6 @@
 
 [node name="explose" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 1 )
-unit_size = 29.9
-max_db = 3.526
+unit_size = 0.1
+max_db = -10.392
 max_distance = 100.0

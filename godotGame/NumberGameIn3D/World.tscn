@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://tank_trexhwm_obj/tank_bottom.obj" type="ArrayMesh" id=2]
@@ -22,21 +22,7 @@ albedo_texture = ExtResource( 6 )
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 3.04138, 1.9793, 4.69305 )
 
-[sub_resource type="Shader" id=6]
-code = "shader_type spatial;
-render_mode unshaded;
-
-uniform sampler2D refl_tx;
-void fragment(){
-    ALBEDO = texture( refl_tx, vec2(1.0 - SCREEN_UV.x, SCREEN_UV.y) ).rgb;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
-
 [sub_resource type="PlaneMesh" id=8]
-material = SubResource( 7 )
 size = Vector2( 120, 60 )
 
 [sub_resource type="Shader" id=9]

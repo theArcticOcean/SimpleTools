@@ -6,7 +6,6 @@ func _ready():
 	musicContainer = preload( "res://musics.tscn" ).instance()
 	$FallStone/MeshInstance.transform.origin = Vector3( 1, 1, 0 )
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if null == $FallStone/MeshInstance:
 		return 

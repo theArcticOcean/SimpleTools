@@ -21,7 +21,7 @@ albedo_color = Color( 0.384314, 0.0588235, 0.0588235, 1 )
 [sub_resource type="BoxShape" id=6]
 
 [sub_resource type="CubeMesh" id=7]
-size = Vector3( 100, 2, 40 )
+size = Vector3( 120, 2, 40 )
 
 [sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 1 )
@@ -52,7 +52,7 @@ material/0 = SubResource( 5 )
 shape = SubResource( 6 )
 
 [node name="floorA" type="CSGMesh" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.18646, 25.8578, -30.8567 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.18646, 11.2635, -30.8567 )
 use_collision = true
 mesh = SubResource( 7 )
 material = SubResource( 8 )

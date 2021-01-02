@@ -7,6 +7,13 @@ include( ${VTK_USE_FILE} )
 
 add_executable(${PROJECT_NAME}
     "main.cpp"
-    "ULog.h")
+    "ULog.h"
+    "IOBase.h"
+    "IOBase.cpp"
+    "stlIO.h"
+    "stlIO.cpp"
+    "objIO.h"
+    "objIO.cpp"
+    )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} )

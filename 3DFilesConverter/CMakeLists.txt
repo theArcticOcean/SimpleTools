@@ -20,6 +20,8 @@ add_executable(${PROJECT_NAME}
     "vtpIO.cpp"
     "gltfIO.h"
     "gltfIO.cpp"
+    "vtkIO.h"
+    "vtkIO.cpp"
     )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} )

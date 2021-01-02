@@ -6,6 +6,7 @@
 #include "objIO.h"
 #include "plyIO.h"
 #include "vtpIO.h"
+#include "vtkIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -65,6 +66,10 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new vtpIO();
     }
+    else if( old_suffix == "vtk" )
+    {
+        reader = new vtkIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -84,6 +89,10 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "vtp" )
     {
         writer = new vtpIO();
+    }
+    else if( new_suffix == "vtk" )
+    {
+        writer = new vtkIO();
     }
 }
 

@@ -14,6 +14,12 @@ add_executable(${PROJECT_NAME}
     "stlIO.cpp"
     "objIO.h"
     "objIO.cpp"
+    "plyIO.h"
+    "plyIO.cpp"
+    "vtpIO.h"
+    "vtpIO.cpp"
+    "gltfIO.h"
+    "gltfIO.cpp"
     )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} )

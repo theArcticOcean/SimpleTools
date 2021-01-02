@@ -4,10 +4,13 @@
 #include "ULog.h"
 #include "stlIO.h"
 #include "objIO.h"
+#include "plyIO.h"
+#include "vtpIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
 void ChooseWriter( IOBase *&writer, std::string new_suffix );
+void FreePointer( IOBase *&ptr );
 
 // parameters: exe_path file_name old_suffix new_suffix.
 int main( int argc, char **argv )
@@ -36,12 +39,10 @@ int main( int argc, char **argv )
         std::string newFilePath = baseName + "." + new_suffix;
         writer->Write( (vtkPolyData*)data, newFilePath );
         Log( IInfo, newFilePath );
-
-        delete reader;
-        reader = nullptr;
-        delete writer;
-        writer = nullptr;
     }
+
+    FreePointer( reader );
+    FreePointer( writer );
     return 0;
 }
 
@@ -56,6 +57,14 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new objIO();
     }
+    else if( old_suffix == "ply" )
+    {
+        reader = new plyIO();
+    }
+    else if( old_suffix == "vtp" )
+    {
+        reader = new vtpIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -67,5 +76,22 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "obj" )
     {
         writer = new objIO();
+    }
+    else if( new_suffix == "ply" )
+    {
+        writer = new plyIO();
+    }
+    else if( new_suffix == "vtp" )
+    {
+        writer = new vtpIO();
+    }
+}
+
+void FreePointer( IOBase *&ptr )
+{
+    if( nullptr != ptr )
+    {
+        delete ptr;
+        ptr = nullptr;
     }
 }

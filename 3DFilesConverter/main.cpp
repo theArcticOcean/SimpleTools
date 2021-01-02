@@ -6,6 +6,9 @@
 #include "objIO.h"
 using namespace std;
 
+void ChooseReader( IOBase *&reader, std::string old_suffix );
+void ChooseWriter( IOBase *&writer, std::string new_suffix );
+
 // parameters: exe_path file_name old_suffix new_suffix.
 int main( int argc, char **argv )
 {
@@ -21,15 +24,9 @@ int main( int argc, char **argv )
     IOBase *reader = nullptr;
     IOBase *writer = nullptr;
     vtkDataObject *data = nullptr;
-    if( old_suffix == "stl" )
-    {
-        reader = new stlIO();
-    }
-
-    if( new_suffix == "obj" )
-    {
-        writer = new objIO();
-    }
+    ChooseReader( reader, old_suffix );
+    ChooseWriter( writer, new_suffix );
+    Log( IInfo, reader, ", ", writer );
 
     if( reader && writer )
     {
@@ -38,6 +35,7 @@ int main( int argc, char **argv )
         std::string baseName = reader->GetBaseName( file_name );
         std::string newFilePath = baseName + "." + new_suffix;
         writer->Write( (vtkPolyData*)data, newFilePath );
+        Log( IInfo, newFilePath );
 
         delete reader;
         reader = nullptr;
@@ -45,4 +43,29 @@ int main( int argc, char **argv )
         writer = nullptr;
     }
     return 0;
+}
+
+
+void ChooseReader( IOBase *&reader, std::string old_suffix )
+{
+    if( old_suffix == "stl" )
+    {
+        reader = new stlIO();
+    }
+    else if( old_suffix == "obj" )
+    {
+        reader = new objIO();
+    }
+}
+
+void ChooseWriter( IOBase *&writer, std::string new_suffix )
+{
+    if( new_suffix == "stl" )
+    {
+        writer = new stlIO();
+    }
+    else if( new_suffix == "obj" )
+    {
+        writer = new objIO();
+    }
 }

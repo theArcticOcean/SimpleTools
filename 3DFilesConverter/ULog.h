@@ -47,7 +47,7 @@ void print(E_Log_Level level, const char *name, int line,  Args... args)
         break;
     }
     str = str + "[" + name + ":";
-    str = str + std::to_string( line ) + "] ";
+    str = str + std::to_string( line ) + "]\n";
 
     print( str, args...);
 }

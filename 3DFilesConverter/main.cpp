@@ -1,5 +1,9 @@
 #include <iostream>
 #include <string>
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+#include <vtkRenderer.h>
+#include <vtkRenderWindow.h>
 
 #include "ULog.h"
 #include "stlIO.h"
@@ -7,6 +11,7 @@
 #include "plyIO.h"
 #include "vtpIO.h"
 #include "vtkIO.h"
+#include "gltfIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -70,6 +75,10 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new vtkIO();
     }
+    else if( old_suffix == "gltf" )
+    {
+        reader = new gltfIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -93,6 +102,10 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "vtk" )
     {
         writer = new vtkIO();
+    }
+    else if( new_suffix == "gltf" )
+    {
+        writer = new gltfIO();
     }
 }
 

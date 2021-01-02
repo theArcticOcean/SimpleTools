@@ -4,6 +4,9 @@
 #include <vtkSmartPointer.h>
 #include <string>
 
+#define vtkSPtr vtkSmartPointer
+#define vtkSPtrNew(Var, Type) vtkSPtr<Type> Var = vtkSPtr<Type>::New();
+
 class IOBase
 {
 public:

@@ -22,6 +22,8 @@ add_executable(${PROJECT_NAME}
     "gltfIO.cpp"
     "vtkIO.h"
     "vtkIO.cpp"
+    "zipManager.h"
+    "zipManager.cpp"
     )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} )

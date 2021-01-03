@@ -15,7 +15,7 @@ public:
     virtual void Read(std::string filePath){}
     vtkSmartPointer<vtkPolyData> GetData();
     virtual void Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){}
-    std::string GetBaseName(std::string filePath);
+    static std::string GetBaseName(std::string filePath);
 protected:
     vtkSmartPointer<vtkPolyData> m_Data;
 };

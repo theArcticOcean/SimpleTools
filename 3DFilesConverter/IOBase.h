@@ -16,6 +16,7 @@ public:
     vtkSmartPointer<vtkPolyData> GetData();
     virtual void Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){}
     static std::string GetBaseName(std::string filePath);
+    static int RemoveDir(const char *dir);
 protected:
     vtkSmartPointer<vtkPolyData> m_Data;
 };

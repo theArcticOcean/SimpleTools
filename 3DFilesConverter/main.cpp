@@ -6,6 +6,7 @@
 #include <vtkRenderWindow.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "ULog.h"
 #include "stlIO.h"
@@ -46,7 +47,12 @@ int main( int argc, char **argv )
         // unzip compressed file.
         if( zipper.endsWith( file_name, ".zip" ) )
         {
-            std::string folder = zipper.unzip( file_name );
+            std::string folder = IOBase::GetBaseName( file_name );
+            if ( access( folder.c_str(), F_OK ) == 0 )
+            {
+                IOBase::RemoveDir( folder.c_str() );
+            }
+            folder = zipper.unzip( file_name );
             std::string file = zipper.FindFilePath( ".gltf", folder );
             file_name = file;
             Log( IInfo, "file_name: ", file_name );
@@ -61,9 +67,14 @@ int main( int argc, char **argv )
         // create folder if the output file is special format.
         if( new_suffix == "gltf" )
         {
+            if ( access( baseName.c_str(), F_OK ) == 0 )
+            {
+                Log( IInfo, "start to remove dir" );
+                IOBase::RemoveDir( baseName.c_str() );
+            }
             if ( mkdir( baseName.c_str(), 0777) )
             {
-                perror( baseName.c_str() );
+                Log( IError, strerror(errno) );
                 return -1;
             }
             newFilePath = baseName + "/result." + new_suffix;

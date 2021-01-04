@@ -28,6 +28,10 @@ std::string zipManager::unzip(std::string filePath)
 std::string zipManager::zip(std::string folderPath)
 {
     std::string zipPath = folderPath + ".zip";
+    if ( access( zipPath.c_str(), F_OK ) == 0 )
+    {
+        IOBase::RemoveDir( zipPath.c_str() );
+    }
     std::string commandStr = "zip -j " + zipPath + " " + folderPath + "/*";
     int ret = system( commandStr.c_str() );
     Log( IInfo, "ret: ", ret );

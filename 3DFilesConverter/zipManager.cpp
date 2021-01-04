@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 /*
-*   command format: 'unzip gltf.zip'
+*   command format: 'unzip -d gltf.zip'
 *   return folder path.
 */
 std::string zipManager::unzip(std::string filePath)
@@ -22,13 +22,13 @@ std::string zipManager::unzip(std::string filePath)
 }
 
 /*
-*   command format: 'zip -r gltf.zip gltf/*'
+*   command format: 'zip -j gltf.zip gltf/*'
 *   return zip file path.
 */
 std::string zipManager::zip(std::string folderPath)
 {
     std::string zipPath = folderPath + ".zip";
-    std::string commandStr = "zip -r " + zipPath + " " + folderPath + "/*";
+    std::string commandStr = "zip -j " + zipPath + " " + folderPath + "/*";
     int ret = system( commandStr.c_str() );
     Log( IInfo, "ret: ", ret );
     return zipPath;

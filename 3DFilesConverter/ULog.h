@@ -4,7 +4,13 @@
 #include <iostream>
 #include <string>
 
-#define Log( Level, ... ) print( Level, __FILE__, __LINE__, __VA_ARGS__ )
+#define DEBUG_OFF 1
+
+#if DEBUG_OFF
+    #define Log( Level, ... )
+#else
+    #define Log( Level, ... ) print( Level, __FILE__, __LINE__, __VA_ARGS__ )
+#endif
 
 //#define Log( Level, format, ... ) print( Level, __FUNCTION__, __LINE__, format, __VA_ARGS__ )
 

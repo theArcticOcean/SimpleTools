@@ -57,6 +57,7 @@ int main( int argc, char **argv )
         std::string baseName = reader->GetBaseName( file_name );
         std::string newFilePath = baseName + "." + new_suffix;
 
+        Log( IInfo, "baseName: ", baseName );
         // create folder if the output file is special format.
         if( new_suffix == "gltf" )
         {
@@ -75,6 +76,7 @@ int main( int argc, char **argv )
             newFilePath = zipper.zip( baseName );
         }
         Log( IInfo, newFilePath );
+        std::cout << newFilePath << std::endl;
     }
 
     FreePointer( reader );

@@ -15,6 +15,7 @@
 #include "vtpIO.h"
 #include "vtkIO.h"
 #include "gltfIO.h"
+#include "facetIO.h"
 #include "zipManager.h"
 using namespace std;
 
@@ -122,6 +123,10 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new gltfIO();
     }
+    else if( old_suffix == "facet" )
+    {
+        reader = new facetIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -149,6 +154,10 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "gltf" )
     {
         writer = new gltfIO();
+    }
+    else if( new_suffix == "facet" )
+    {
+        writer = new facetIO();
     }
 }
 

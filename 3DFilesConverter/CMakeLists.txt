@@ -24,6 +24,8 @@ add_executable(${PROJECT_NAME}
     "vtkIO.cpp"
     "zipManager.h"
     "zipManager.cpp"
+    "facetIO.h"
+    "facetIO.cpp"
     )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} )

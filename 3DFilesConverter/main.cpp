@@ -81,6 +81,12 @@ int main( int argc, char **argv )
             }
             newFilePath = baseName + "/result." + new_suffix;
         }
+
+        if ( access( newFilePath.c_str(), F_OK ) == 0 )
+        {
+            Log( IInfo, "start to remove exist file" );
+            IOBase::RemoveDir( newFilePath.c_str() );
+        }
         writer->Write( (vtkPolyData*)data, newFilePath );
 
         if( new_suffix == "gltf" )

@@ -17,6 +17,7 @@
 #include "gltfIO.h"
 #include "facetIO.h"
 #include "zipManager.h"
+#include "ctmIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -127,6 +128,10 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new facetIO();
     }
+    else if( old_suffix == "ctm" )
+    {
+        reader = new ctmIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -158,6 +163,10 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "facet" )
     {
         writer = new facetIO();
+    }
+    else if( new_suffix == "ctm" )
+    {
+        writer = new ctmIO();
     }
 }
 

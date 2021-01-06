@@ -8,7 +8,7 @@
 
 IOBase::IOBase()
 {
-    m_Data = nullptr;
+    m_Data = vtkSmartPointer<vtkPolyData>::New();
 }
 
 IOBase::~IOBase()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://tank_trexhwm_obj/tank_bottom.obj" type="ArrayMesh" id=2]
@@ -42,6 +42,9 @@ resource_local_to_scene = true
 shader = SubResource( 7 )
 shader_param/refl_tx = SubResource( 8 )
 
+[sub_resource type="CubeMesh" id=10]
+size = Vector3( 50, 2, 40 )
+
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -56,6 +59,7 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="player" type="KinematicBody" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 12.8378, -28.702 )
 script = ExtResource( 4 )
 
 [node name="tank" type="Sprite3D" parent="player"]
@@ -78,9 +82,8 @@ shape = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.582, 0 )
 doppler_tracking = 2
 current = true
-fov = 96.3
+fov = 89.0
 near = 0.06
-far = 62.7
 script = ExtResource( 7 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -98,3 +101,8 @@ size = Vector2( 500, 500 )
 [node name="Camera" type="Camera" parent="wall/Viewport"]
 transform = Transform( -0.870529, -0.0685615, -0.487317, -0.0817137, 0.996639, 0.00575219, 0.485285, 0.0448279, -0.873206, 0, 4.88057, -65.65 )
 current = true
+
+[node name="slope" type="CSGMesh" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.948914, -0.315533, 0, 0.315533, 0.948914, 1.33926, 5.20187, 7.18879 )
+use_collision = true
+mesh = SubResource( 10 )

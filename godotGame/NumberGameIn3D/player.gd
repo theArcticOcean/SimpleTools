@@ -1,10 +1,11 @@
 extends KinematicBody
 
-var gravity= -ProjectSettings.get_setting( "physics/3d/default_gravity" )*2
+var gravity= -ProjectSettings.get_setting( "physics/3d/default_gravity" )*6
 const SPEED = 7
 const ACCELERATION = 3
 const DE_ACCELERATION = 5
 var velocity = Vector3(0, 0, 0)
+var mouse_sensitivity = 0.05
 var nothing_pressed
 
 # Called when the node enters the scene tree for the first time.
@@ -12,6 +13,9 @@ func _ready():
 	pass
 
 func _input( event ):
+	if event is InputEventMouseMotion:
+		rotate_y( deg2rad(-event.relative.x * mouse_sensitivity ))
+		$Camera.rotate_y( deg2rad(-event.relative.x * mouse_sensitivity) )
 	if event.is_pressed():
 		nothing_pressed = false
 	else:

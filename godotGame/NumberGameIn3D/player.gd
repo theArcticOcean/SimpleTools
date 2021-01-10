@@ -1,34 +1,50 @@
 extends KinematicBody
 
 var gravity= -ProjectSettings.get_setting( "physics/3d/default_gravity" )*6
-const SPEED = 7
+const SPEED = 14
 const ACCELERATION = 3
 const DE_ACCELERATION = 5
 var velocity = Vector3(0, 0, 0)
-var mouse_sensitivity = 0.05
+var mouse_sensitivity = 0.2
 var nothing_pressed
+export var captured : bool = true; # Does not let the mouse leave the screen
+var bullect_move_vec = Vector3()
+const FIREBALL = preload("res://bullet.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 
+func _unhandled_input(event):
+	if Input.is_action_just_pressed( "Shooting" ):
+		var fireball = FIREBALL.instance()
+		add_child( fireball )
+		fireball.start( $Position3D.global_transform )
+
 func _input( event ):
 	if event is InputEventMouseMotion:
 		rotate_y( deg2rad(-event.relative.x * mouse_sensitivity ))
-		$Camera.rotate_y( deg2rad(-event.relative.x * mouse_sensitivity) )
 	if event.is_pressed():
 		nothing_pressed = false
 	else:
 		nothing_pressed = true
 
 func _physics_process( delta ):
+	if Input.is_action_just_pressed("KEY_ESCAPE"):
+		captured = !captured
+
+	if captured:
+		# Locks the mouse in the center of the screen
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
+	else:
+		# Unlocks the mouse from the center of the screen
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+
 	if Input.is_action_pressed("turn_head"):
 		if Input.is_action_pressed( "move_left" ):
 			rotate_y( PI/180 )
-			$Camera.rotate_y( PI/180 )
 		elif Input.is_action_pressed( "move_right" ):
 			rotate_y( -PI/180 )
-			$Camera.rotate_y( -PI/180 )
 
 		return
 

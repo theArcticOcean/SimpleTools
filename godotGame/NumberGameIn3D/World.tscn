@@ -103,6 +103,6 @@ transform = Transform( -0.870529, -0.0685615, -0.487317, -0.0817137, 0.996639, 0
 current = true
 
 [node name="slope" type="CSGMesh" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.948914, -0.315533, 0, 0.315533, 0.948914, 1.33926, 5.20187, 7.18879 )
+transform = Transform( 1, 0, 0, 0, 0.952687, -0.30395, 0, 0.30395, 0.952687, 1.339, 5.206, 7.794 )
 use_collision = true
 mesh = SubResource( 10 )

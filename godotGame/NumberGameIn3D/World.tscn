@@ -1,16 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://tank_trexhwm_obj/tank_bottom.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://tank_trexhwm_obj/tank_top.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://player.gd" type="Script" id=4]
 [ext_resource path="res://Environment.tscn" type="PackedScene" id=5]
 [ext_resource path="res://tank_trexhwm_obj/textures/DefaultMaterial_Diffuse.png" type="Texture" id=6]
-
-[sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.984314, 0.0470588, 0.376471, 1 )
-
-[sub_resource type="SphereMesh" id=2]
+[ext_resource path="res://number.tscn" type="PackedScene" id=7]
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 6 )
@@ -45,17 +40,9 @@ shader_param/refl_tx = SubResource( 8 )
 size = Vector3( 50, 2, 40 )
 
 [node name="World" type="Spatial"]
-script = ExtResource( 1 )
 
 [node name="Environment" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0 )
-
-[node name="FallStone" type="Sprite3D" parent="."]
-
-[node name="MeshInstance" type="MeshInstance" parent="FallStone"]
-material_override = SubResource( 1 )
-mesh = SubResource( 2 )
-material/0 = null
 
 [node name="player" type="KinematicBody" parent="."]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 12.0153, -28.702 )
@@ -107,3 +94,6 @@ current = true
 transform = Transform( 1, 0, 0, 0, 0.952687, -0.30395, 0, 0.30395, 0.952687, 1.339, 5.206, 7.794 )
 use_collision = true
 mesh = SubResource( 10 )
+
+[node name="number" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.2954, 19.5147 )

@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://hub.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tank_trexhwm_obj/tank_bottom.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://tank_trexhwm_obj/tank_top.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://player.gd" type="Script" id=4]
@@ -97,3 +98,5 @@ mesh = SubResource( 10 )
 
 [node name="number" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.2954, 19.5147 )
+
+[node name="hub" parent="." instance=ExtResource( 1 )]

@@ -1,6 +1,6 @@
 extends Spatial
 
-var speed = 15
+var speed = 30
 var velocity = Vector3()
 onready var timer = get_node("Timer")  #onready make sure everything is set up
 
@@ -19,7 +19,7 @@ func _process(delta):
 # if bullet met something, it will be destroyed.
 func _on_bullet_body_entered( body ):
 	if body is StaticBody:
-		# to do: body.explose()
+		body.destroied()
 		queue_free()
 
 func _on_Timer_timeout():

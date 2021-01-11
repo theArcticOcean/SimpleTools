@@ -10,7 +10,7 @@ var nothing_pressed
 export var captured : bool = true; # Does not let the mouse leave the screen
 var bullect_move_vec = Vector3()
 const FIREBALL = preload("res://bullet.tscn")
-var musicContainer: Node = preload( "res://musics.tscn" ).instance()
+onready var musicContainer: Node = get_parent().get_node("musics")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,13 +21,7 @@ func _unhandled_input(event):
 		var fireball = FIREBALL.instance()
 		add_child( fireball )
 		fireball.start( $Position3D.global_transform )
-		var player:AudioStreamPlayer3D = musicContainer.get_node( "explose" ).duplicate()
-		player.stream = player.stream.duplicate()
-		player.stream.loop = false
-		player.global_transform.origin = $Camera.global_transform.origin
-		player.play()
-		$"/root".add_child( player )
-		player.connect( "finished", player, "queue_free" )
+		musicContainer.playExplose( $Camera.global_transform.origin )
 
 func _input( event ):
 	if event is InputEventMouseMotion:

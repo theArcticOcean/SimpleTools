@@ -21,7 +21,9 @@ func _unhandled_input(event):
 		var fireball = FIREBALL.instance()
 		add_child( fireball )
 		fireball.start( $Position3D.global_transform )
-		musicContainer.playExplose( $Camera.global_transform.origin )
+		musicContainer.playExplose( $Position3D.global_transform.origin, "fire" )
+		# to do:
+		print( get_parent().get_node( "hub" ).GetCalculateResult() )
 
 func _input( event ):
 	if event is InputEventMouseMotion:

@@ -6,13 +6,18 @@ func _ready():
 	$BGM.global_transform = get_parent().get_node("player").global_transform
 	$BGM.play()
 
-func playExplose( position ):
-	var player:AudioStreamPlayer3D = $explose.duplicate()
+func playExplose( position, type ):
+	var player:AudioStreamPlayer3D = null
+	if type == "explose":
+		player = $explose.duplicate()
+	elif type == "fire":
+		player = $fire.duplicate()
+
 	player.stream = player.stream.duplicate()
 	player.stream.loop = false
 	player.global_transform.origin = position
 	player.play()
-	$"/root".add_child( player )
+	add_child( player )
 	player.connect( "finished", player, "queue_free" )
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

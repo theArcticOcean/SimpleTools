@@ -20,6 +20,7 @@ func _process(delta):
 func _on_bullet_body_entered( body ):
 	if body is StaticBody:
 		body.destroied()
+		get_tree().root.get_node("World/musics").playExplose( body.global_transform.origin, "explose" )
 		queue_free()
 
 func _on_Timer_timeout():

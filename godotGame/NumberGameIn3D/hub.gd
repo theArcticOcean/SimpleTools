@@ -8,8 +8,6 @@ onready var numGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	generateContent()
-	updateLabel()
 
 func GetCalculateResult():
 	var result = -1
@@ -54,3 +52,8 @@ func generateContent():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Timer_timeout():
+	generateContent()
+	updateLabel()

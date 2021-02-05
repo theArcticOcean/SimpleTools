@@ -11,10 +11,10 @@ font_data = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="label" type="Label" parent="."]
-margin_left = 0.724487
-margin_top = 550.122
-margin_right = 145.724
-margin_bottom = 598.122
+margin_left = -0.610352
+margin_top = 551.457
+margin_right = 144.389
+margin_bottom = 599.457
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 0.980392, 0.980392, 1 )
 align = 1
@@ -23,3 +23,14 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="progressBar" type="ProgressBar" parent="."]
+margin_left = 247.245
+margin_top = 4.90033
+margin_right = 785.245
+margin_bottom = 26.9003
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="checkPointTimer" type="Timer" parent="."]

@@ -4,10 +4,12 @@ var number: Array
 var operator: String
 var content: String
 onready var numGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
+var restSecCount = 30.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	numGenerator.randomize()
+	$checkPointTimer.start( restSecCount )
 
 func GetCalculateResult():
 	var result = -1
@@ -50,9 +52,8 @@ func generateContent():
 	operator = mapFromIntToStr( opetatorNum )
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+func _process(delta):
+	$progressBar.value = $checkPointTimer.time_left / restSecCount * 100
 
 func _on_Timer_timeout():
 	generateContent()

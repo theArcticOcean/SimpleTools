@@ -55,6 +55,6 @@ func generateContent():
 func _process(delta):
 	$progressBar.value = $checkPointTimer.time_left / restSecCount * 100
 
-func _on_Timer_timeout():
+func _on_updateNumTimer_timeout():
 	generateContent()
 	updateLabel()

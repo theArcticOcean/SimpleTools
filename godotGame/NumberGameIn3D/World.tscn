@@ -58,5 +58,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45332e-06, 3.64806, -7.52919
 
 [node name="musics" parent="." instance=ExtResource( 8 )]
 
-[node name="timer" type="Timer" parent="."]
-[connection signal="timeout" from="timer" to="hub" method="_on_Timer_timeout"]
+[node name="updateNumTimer" type="Timer" parent="."]
+[connection signal="timeout" from="updateNumTimer" to="hub" method="_on_Timer_timeout"]

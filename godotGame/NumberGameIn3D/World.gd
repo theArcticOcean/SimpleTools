@@ -4,7 +4,7 @@ extends Spatial
 func _ready():
 	get_node( "hub" ).generateContent()
 	get_node( "hub" ).updateLabel()
-	get_node( "timer" ).start( 10 )
+	get_node( "updateNumTimer" ).start( 10 )
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

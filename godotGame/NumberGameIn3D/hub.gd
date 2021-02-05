@@ -4,7 +4,7 @@ var number: Array
 var operator: String
 var content: String
 onready var numGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
-var restSecCount = 30.0
+onready var restSecCount = get_node( "../updateNumTimer" ).get_wait_time()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

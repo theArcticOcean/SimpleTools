@@ -7,7 +7,7 @@ onready var numGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	randomize()
+	numGenerator.randomize()
 
 func GetCalculateResult():
 	var result = -1
@@ -40,7 +40,7 @@ func mapFromIntToStr( parameter ):
 func generateContent():
 	number.clear()
 	number.append( numGenerator.randi_range( 1, 99 ) )
-	number.append( numGenerator.randi_range( 1, 99 ) )	
+	number.append( numGenerator.randi_range( 1, 99 ) )
 	var opetatorNum = numGenerator.randi_range( 1, 2 )
 	if number[0] < number[1] and opetatorNum == 2:
 		var tmp = number[0]

@@ -3,11 +3,13 @@ extends Spatial
 var speed = 50
 var velocity = Vector3()
 onready var timer = get_node("Timer")  #onready make sure everything is set up
+signal sig_clear_result
 
 func _ready():
 	timer.set_wait_time( 2 )
 	timer.start()
-	set_as_toplevel( true )
+	set_as_toplevel( true )	
+	connect("sig_clear_result", get_tree().root.get_node("World/hub"), "_on_clear_result" )
 
 func start( xform ):
 	global_transform = xform
@@ -26,11 +28,15 @@ func AppendResult( value ):
 func _on_bullet_body_entered( body ):
 	if body is StaticBody:
 		var content = body.GetContent()
-		var number = content.to_int()
-		if number >= 0 and number < 10:
-			AppendResult( number )
-		body.destroied()
-		get_tree().root.get_node("World/musics").playExplose( body.global_transform.origin, "explose" )
+		if content == "clear":
+			print( content )
+			emit_signal("sig_clear_result")
+		else:
+			var number = content.to_int()
+			if number >= 0 and number < 10:
+				AppendResult( number )
+				body.destroied()
+				get_tree().root.get_node("World/musics").playExplose( body.global_transform.origin, "explose" )
 		queue_free()
 
 func _on_Timer_timeout():

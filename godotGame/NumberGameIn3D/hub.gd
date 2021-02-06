@@ -58,3 +58,6 @@ func _process(delta):
 func _on_updateNumTimer_timeout():
 	generateContent()
 	updateLabel()
+
+func _on_clear_result():
+	$resultLabel.text = ""

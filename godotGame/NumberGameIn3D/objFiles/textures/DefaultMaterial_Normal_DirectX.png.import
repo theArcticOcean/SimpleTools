@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DefaultMaterial_Normal_DirectX.png-a31b03247987dc8b3aec781b3ffa0f06.stex"
+path="res://.import/DefaultMaterial_Normal_DirectX.png-f3b3b99804df6757631795ed30d9d226.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tank_trexhwm_obj/textures/DefaultMaterial_Normal_DirectX.png"
-dest_files=[ "res://.import/DefaultMaterial_Normal_DirectX.png-a31b03247987dc8b3aec781b3ffa0f06.stex" ]
+source_file="res://objFiles/textures/DefaultMaterial_Normal_DirectX.png"
+dest_files=[ "res://.import/DefaultMaterial_Normal_DirectX.png-f3b3b99804df6757631795ed30d9d226.stex" ]
 
 [params]
 

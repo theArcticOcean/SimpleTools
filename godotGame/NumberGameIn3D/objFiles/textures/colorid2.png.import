@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/colorid2.png-38691f4d60f200c0b024c2897c255840.stex"
+path="res://.import/colorid2.png-b9823bcc5a0401448bbe53cebaa8383a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tank_trexhwm_obj/textures/colorid2.png"
-dest_files=[ "res://.import/colorid2.png-38691f4d60f200c0b024c2897c255840.stex" ]
+source_file="res://objFiles/textures/colorid2.png"
+dest_files=[ "res://.import/colorid2.png-b9823bcc5a0401448bbe53cebaa8383a.stex" ]
 
 [params]
 

@@ -15,7 +15,7 @@ func start( xform ):
 
 func _process(delta):
 	global_transform.origin -= velocity*delta
-	
+
 func ClearResult():
 	get_tree().root.get_node("World/hub/resultLabel").text = ""
 

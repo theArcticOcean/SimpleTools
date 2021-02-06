@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/DefaultMaterial_Glossiness.png-7331ac00ab373ac0f0b06fe13e82a579.s3tc.stex"
-path.etc2="res://.import/DefaultMaterial_Glossiness.png-7331ac00ab373ac0f0b06fe13e82a579.etc2.stex"
+path.s3tc="res://.import/DefaultMaterial_Diffuse.png-7bfed5417a90ce36c138fd9d684b43ab.s3tc.stex"
+path.etc2="res://.import/DefaultMaterial_Diffuse.png-7bfed5417a90ce36c138fd9d684b43ab.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://tank_trexhwm_obj/textures/DefaultMaterial_Glossiness.png"
-dest_files=[ "res://.import/DefaultMaterial_Glossiness.png-7331ac00ab373ac0f0b06fe13e82a579.s3tc.stex", "res://.import/DefaultMaterial_Glossiness.png-7331ac00ab373ac0f0b06fe13e82a579.etc2.stex" ]
+source_file="res://objFiles/textures/DefaultMaterial_Diffuse.png"
+dest_files=[ "res://.import/DefaultMaterial_Diffuse.png-7bfed5417a90ce36c138fd9d684b43ab.s3tc.stex", "res://.import/DefaultMaterial_Diffuse.png-7bfed5417a90ce36c138fd9d684b43ab.etc2.stex" ]
 
 [params]
 

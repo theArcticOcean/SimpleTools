@@ -20,8 +20,8 @@ func GetCalculateResult():
 	return result
 
 func updateLabel():
-	content = String( number[0] ) + operator + String( number[1] )
-	$label.text = content
+	content = String( number[0] ) + operator + String( number[1] ) + " = "
+	$questionLabel.text = content
 
 func mapFromStrToInt( parameter ):
 	var result = 0

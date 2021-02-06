@@ -1,6 +1,7 @@
 extends StaticBody
 
 var numGen: RandomNumberGenerator
+var content: String
 
 # Called when the node enters the scene tree for the first time.
 func Prepare():
@@ -9,6 +10,9 @@ func Prepare():
 
 func destroied():
 	queue_free()
+
+func GetContent():
+	return content
 
 func GetRandomLandPos( _y ):
 	var x = numGen.randi_range( -50, 50 )
@@ -25,6 +29,7 @@ func LookAtCamera( cameraPos ):
 func InitNumber( num, type, _y ):
 	var path : String = "res://tank_trexhwm_obj/number/"
 	path = path + str(num) + ".obj"
+	content = str(num)
 	get_node("target").mesh = load( path )
 	var position
 	if type == 0:

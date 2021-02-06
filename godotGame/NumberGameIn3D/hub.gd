@@ -4,12 +4,28 @@ var number: Array
 var operator: String
 var content: String
 onready var numGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
-onready var restSecCount = get_node( "../updateNumTimer" ).get_wait_time()
+onready var restSecCount = get_node( "checkPointTimer" ).get_wait_time()
+
+func ShowGameOverUI( gameOver ):
+	if gameOver:
+		$gameOverLabel.show()
+		$restartButton.show()
+		get_tree().root.get_node("World/Environment").set_visible( false )
+		get_tree().root.get_node("World/player").set_visible( false )
+	else:
+		$gameOverLabel.hide()
+		$restartButton.hide()
+		get_tree().root.get_node("World/Environment").set_visible( true )
+		get_tree().root.get_node("World/player").set_visible( true )
+		$resultLabel.text = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	numGenerator.randomize()
+	ShowGameOverUI( false )
 	$checkPointTimer.start( restSecCount )
+	$checkPointTimer.connect("timeout", get_tree().root.get_node("World"), "_on_checkPointTimer_timeout" )
+	$restartButton.connect("button_up", get_tree().root.get_node("World"), "_on_restartButton_down" )
 
 func GetCalculateResult():
 	var result = -1
@@ -51,13 +67,27 @@ func generateContent():
 
 	operator = mapFromIntToStr( opetatorNum )
 
+func IsResultRight():
+	var result = mapFromStrToInt( $resultLabel.text )
+	if result == GetCalculateResult():
+		return true
+	return false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$progressBar.value = $checkPointTimer.time_left / restSecCount * 100
 
-func _on_updateNumTimer_timeout():
-	generateContent()
-	updateLabel()
+func _on_checkPointTimer_timeout():
+	if IsResultRight():
+		generateContent()
+		updateLabel()
+	else:
+		ShowGameOverUI( true )
 
 func _on_clear_result():
 	$resultLabel.text = ""
+
+func _on_restartButton_button_up():
+	ShowGameOverUI( false )
+	generateContent()
+	updateLabel()

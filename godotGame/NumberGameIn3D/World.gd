@@ -14,7 +14,6 @@ func _ready():
 	clear_instance.Prepare()
 	add_child( clear_instance )	
 	clear_instance.PutNewPos()
-	$updateNumTimer.start( 10 )
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,10 +31,15 @@ func PutNumbers():
 		numbers.append( number )
 		add_child( number )
 
-func _on_updateNumTimer_timeout():
+func _on_checkPointTimer_timeout():
 	for number in numbers:
 		if null != number:
 			number.destroied()
 	numbers.clear()
-	PutNumbers()
-	clear_instance.PutNewPos()
+	if $hub.IsResultRight():
+		PutNumbers()
+		clear_instance.PutNewPos()
+
+func _on_restartButton_down():
+		PutNumbers()
+		clear_instance.PutNewPos()

@@ -14,9 +14,9 @@ func destroied():
 func GetContent():
 	return content
 
-func GetRandomLandPos( _y ):
+func GetRandomLandPos( landPos ):
 	var x = numGen.randi_range( -50, 50 )
-	var y = _y
+	var y = landPos[1] + 3
 	var z = numGen.randi_range( -30, 50 )
 	return [x, y, z]
 
@@ -26,13 +26,11 @@ func LookAtCamera( cameraPos ):
 	var pos = get_node("target").global_transform.origin + vec
 	get_node("target").look_at( pos, Vector3(0, 1, 0) )
 
-func InitNumber( num, type, _y ):
+func InitNumber( num, landPos ):
 	var path : String = "res://objAndPng//number/"
 	path = path + str(num) + ".obj"
 	content = str(num)
 	get_node("target").mesh = load( path )
-	var position
-	if type == 0:
-		position = GetRandomLandPos( _y )
-		global_transform.origin = Vector3( position[0], position[1], position[2] )
+	var position = GetRandomLandPos( landPos )
+	global_transform.origin = Vector3( position[0], position[1], position[2] )
 	print( position )

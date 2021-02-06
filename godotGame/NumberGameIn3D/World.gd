@@ -26,8 +26,14 @@ func PutNumbers():
 	for i in range(0, 9):
 		var number = NUMBER_OBJ.instance()
 		number.Prepare()
-		var _y = get_node("Environment/land").global_transform.origin[1] + 3
-		number.InitNumber( i, 0, _y )
+		number.InitNumber( i, get_node("Environment/land").global_transform.origin )
+		numbers.append( number )
+		add_child( number )
+	
+	for i in range(0, 9):
+		var number = NUMBER_OBJ.instance()
+		number.Prepare()
+		number.InitNumber( i, get_node("Environment/floorB").global_transform.origin )
 		numbers.append( number )
 		add_child( number )
 

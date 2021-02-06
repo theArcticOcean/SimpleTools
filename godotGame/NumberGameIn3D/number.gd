@@ -15,9 +15,9 @@ func GetContent():
 	return content
 
 func GetRandomLandPos( landPos ):
-	var x = numGen.randi_range( -50, 50 )
+	var x = numGen.randi_range( -50, 50 ) + landPos[0]
 	var y = landPos[1] + 3
-	var z = numGen.randi_range( -30, 50 )
+	var z = numGen.randi_range( -30, 50 ) + landPos[2]
 	return [x, y, z]
 
 func LookAtCamera( cameraPos ):

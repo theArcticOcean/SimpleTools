@@ -22,20 +22,18 @@ func _process(delta):
 			number.LookAtCamera( $player/Camera.global_transform.origin )
 
 func PutNumbers():
-	print( "===> PutNumbers <===" )
-	for i in range(0, 9):
-		var number = NUMBER_OBJ.instance()
-		number.Prepare()
-		number.InitNumber( i, get_node("Environment/land").global_transform.origin )
-		numbers.append( number )
-		add_child( number )
-	
-	for i in range(0, 9):
-		var number = NUMBER_OBJ.instance()
-		number.Prepare()
-		number.InitNumber( i, get_node("Environment/floorB").global_transform.origin )
-		numbers.append( number )
-		add_child( number )
+	var posArray = []
+	posArray.append( get_node("Environment/land").global_transform.origin )
+	posArray.append( get_node("Environment/floorA").global_transform.origin )
+	posArray.append( get_node("Environment/floorB").global_transform.origin )
+	for i in range(0, 3):
+		var pos = posArray[i]
+		for j in range(0, 10):
+			var number = NUMBER_OBJ.instance()
+			number.Prepare()
+			number.InitNumber( j, pos )
+			numbers.append( number )
+			add_child( number )
 
 func _on_checkPointTimer_timeout():
 	for number in numbers:

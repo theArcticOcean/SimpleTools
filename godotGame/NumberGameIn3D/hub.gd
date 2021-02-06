@@ -39,14 +39,6 @@ func updateLabel():
 	content = String( number[0] ) + operator + String( number[1] ) + " = "
 	$questionLabel.text = content
 
-func mapFromStrToInt( parameter ):
-	var result = 0
-	if parameter == " + ":
-		result = 1
-	elif parameter == " - ":
-		result = 2
-	return result
-
 func mapFromIntToStr( parameter ):
 	var result = " ? "
 	if parameter == 1:
@@ -68,7 +60,8 @@ func generateContent():
 	operator = mapFromIntToStr( opetatorNum )
 
 func IsResultRight():
-	var result = mapFromStrToInt( $resultLabel.text )
+	var result = $resultLabel.text.to_int()
+	print( str(result) + " vs " + str(GetCalculateResult()) )
 	if result == GetCalculateResult():
 		return true
 	return false
@@ -81,6 +74,7 @@ func _on_checkPointTimer_timeout():
 	if IsResultRight():
 		generateContent()
 		updateLabel()
+		$resultLabel.text = ""
 	else:
 		ShowGameOverUI( true )
 

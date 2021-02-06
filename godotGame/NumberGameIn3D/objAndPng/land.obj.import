@@ -8,7 +8,7 @@ path="res://.import/land.obj-e029e3ec397ef714f448cc1179447808.mesh"
 
 files=[ "res://.import/land.obj-e029e3ec397ef714f448cc1179447808.mesh" ]
 
-source_file="res://objFiles/land.obj"
+source_file="res://objAndPng/land.obj"
 dest_files=[ "res://.import/land.obj-e029e3ec397ef714f448cc1179447808.mesh", "res://.import/land.obj-e029e3ec397ef714f448cc1179447808.mesh" ]
 
 [params]

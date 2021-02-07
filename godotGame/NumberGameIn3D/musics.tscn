@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://music/explose.ogg" type="AudioStream" id=1]
 [ext_resource path="res://music/Victory.ogg" type="AudioStream" id=2]
 [ext_resource path="res://musics.gd" type="Script" id=3]
 [ext_resource path="res://music/fire.ogg" type="AudioStream" id=4]
+[ext_resource path="res://music/hibernation.ogg" type="AudioStream" id=5]
 
 [node name="musics" type="Node"]
 script = ExtResource( 3 )
@@ -21,3 +22,6 @@ unit_size = 29.8
 [node name="fire" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 4 )
 unit_size = 36.0
+
+[node name="failBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )

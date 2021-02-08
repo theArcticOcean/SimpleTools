@@ -17,13 +17,11 @@ func _ready():
 	pass
 
 func _unhandled_input(event):
-	if Input.is_action_just_pressed( "Shooting" ):
+	if Input.is_action_just_pressed("mouse_left_click"):
 		var fireball = FIREBALL.instance()
 		add_child( fireball )
 		fireball.start( $Position3D.global_transform )
 		musicContainer.playExplose( $Position3D.global_transform.origin, "fire" )
-		# to do:
-		print( get_parent().get_node( "hub" ).GetCalculateResult() )
 
 func _input( event ):
 	if event is InputEventMouseMotion:
@@ -76,7 +74,7 @@ func _physics_process( delta ):
 		acceleration = DE_ACCELERATION
 
 	var targetVec = vec * SPEED
-	if Input.is_action_pressed("speed_up"):
+	if Input.is_action_pressed("mouse_right_click"):
 		targetVec = targetVec * 3
 
 	horizontalVec = horizontalVec.linear_interpolate( targetVec, acceleration * delta )

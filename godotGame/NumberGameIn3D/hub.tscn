@@ -83,5 +83,17 @@ text = "restart"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="timeLabel" type="Label" parent="."]
+margin_left = 214.0
+margin_top = 8.0
+margin_right = 246.0
+margin_bottom = 26.0
+text = "time"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="checkPointTimer" to="." method="_on_checkPointTimer_timeout"]
 [connection signal="button_up" from="restartButton" to="." method="_on_restartButton_button_up"]

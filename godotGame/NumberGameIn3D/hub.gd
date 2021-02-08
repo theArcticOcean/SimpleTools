@@ -95,3 +95,12 @@ func _on_clear_result():
 
 func _on_restartButton_button_up():
 	ShowGameOverUI( false )
+
+func OnChooseNumber():
+	if IsResultRight():
+		generateContent()
+		updateLabel()
+		$resultLabel.text = ""
+		$checkPointTimer.start( restSecCount )
+		return true
+	return false

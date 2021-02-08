@@ -45,5 +45,17 @@ func _on_checkPointTimer_timeout():
 		clear_instance.PutNewPos()
 
 func _on_restartButton_down():
-		PutNumbers()
-		clear_instance.PutNewPos()
+	for number in numbers:
+		if null != number:
+			number.destroied()
+	numbers.clear()
+	PutNumbers()
+	clear_instance.PutNewPos()
+
+func _on_generate_right_result():
+	for number in numbers:
+		if null != number:
+			number.destroied()
+	numbers.clear()
+	PutNumbers()
+	clear_instance.PutNewPos()

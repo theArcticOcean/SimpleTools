@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objAndPng/number/8.obj" type="ArrayMesh" id=1]
+
+[node name="fireEffect" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.36684 )
+
+[node name="smoke" type="CPUParticles" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
+amount = 50
+mesh = ExtResource( 1 )
+emission_shape = 4
+emission_points = PoolVector3Array( 1, 0, 0, -1, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 1, 0, 0, -1 )
+emission_normals = PoolVector3Array(  )
+emission_colors = PoolColorArray( 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0.564706, 0.568627, 0, 1, 0, 0.537255, 0.537255, 1 )
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 42.26
+initial_velocity_random = 1.0
+angular_velocity = 3.0
+linear_accel = 1.0
+radial_accel = 1.0
+tangential_accel = 1.0

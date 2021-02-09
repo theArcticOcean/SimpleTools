@@ -9,7 +9,7 @@ signal sig_generate_right_result
 func _ready():
 	timer.set_wait_time( 2 )
 	timer.start()
-	set_as_toplevel( true )	
+	set_as_toplevel( true )
 	connect( "sig_clear_result", get_tree().root.get_node("World/hub"), "_on_clear_result" )
 	connect( "sig_generate_right_result", get_tree().root.get_node("World"), "_on_generate_right_result" )
 
@@ -30,8 +30,8 @@ func AppendResult( value ):
 func _on_bullet_body_entered( body ):
 	if body is StaticBody:
 		var content = body.GetContent()
+		print( content )
 		if content == "clear":
-			print( content )
 			emit_signal("sig_clear_result")
 		else:
 			var number = content.to_int()

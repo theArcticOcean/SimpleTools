@@ -59,3 +59,15 @@ func _on_generate_right_result():
 	numbers.clear()
 	PutNumbers()
 	clear_instance.PutNewPos()
+
+func _on_mace1_body_entered(body):
+	if body is KinematicBody:
+		$hub.ShowGameOverUI( true )
+
+func _on_mace3_body_entered(body):
+	if body is KinematicBody:
+		$hub.ShowGameOverUI( true )
+
+func _on_mace2_body_entered(body):
+	if body is KinematicBody:
+		$hub.ShowGameOverUI( true )

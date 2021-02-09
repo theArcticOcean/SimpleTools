@@ -39,6 +39,8 @@ func _on_bullet_body_entered( body ):
 				AppendResult( number )
 				body.destroied()
 				get_tree().root.get_node("World/musics").playExplose( body.global_transform.origin, "explose" )
+				get_tree().root.get_node("World/explodeNumber").updateMesh( number, body.global_transform.origin )
+				get_tree().root.get_node("World/explodeNumber").showExplode()
 				if get_tree().root.get_node("World/hub").OnChooseNumber():
 					emit_signal( "sig_generate_right_result" )
 		queue_free()

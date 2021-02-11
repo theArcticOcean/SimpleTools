@@ -27,7 +27,7 @@ func LookAtCamera( cameraPos ):
 	get_node("target").look_at( pos, Vector3(0, 1, 0) )
 
 func InitNumber( num, landPos ):
-	var path : String = "res://objAndPng//number/"
+	var path : String = "res://objAndPng/number/"
 	path = path + str(num) + ".obj"
 	content = str(num)
 	get_node("target").mesh = load( path )

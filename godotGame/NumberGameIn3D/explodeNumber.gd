@@ -12,7 +12,7 @@ func LookAtCamera():
 	look_at( pos, Vector3(0, 1, 0) )
 
 func updateMesh( num, pos ):
-	var path : String = "res://objAndPng//number/"
+	var path : String = "res://objAndPng/number/"
 	path = path + str(num) + ".obj"
 	set_mesh( load( path ) )
 	global_transform.origin = pos

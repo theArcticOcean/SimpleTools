@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://hub.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objAndPng/tank_bottom.obj" type="ArrayMesh" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://explodeNumber.gd" type="Script" id=9]
 [ext_resource path="res://objAndPng/mace.obj" type="ArrayMesh" id=10]
 [ext_resource path="res://mace1.gd" type="Script" id=11]
+[ext_resource path="res://addTime.gd" type="Script" id=12]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 6 )
@@ -76,6 +77,16 @@ func _process(delta):
 "
 
 [sub_resource type="SphereShape" id=9]
+
+[sub_resource type="SphereMesh" id=11]
+
+[sub_resource type="SpatialMaterial" id=12]
+albedo_color = Color( 1, 1, 1, 0.517647 )
+metallic = 1.0
+metallic_specular = 0.91
+roughness = 0.24
+
+[sub_resource type="SphereShape" id=13]
 
 [node name="World" type="Spatial"]
 script = ExtResource( 7 )
@@ -165,7 +176,19 @@ material/0 = SubResource( 5 )
 [node name="CollisionShape" type="CollisionShape" parent="mace3"]
 transform = Transform( 3.52293, 0, 0, 0, 3.21104, 0, 0, 0, 3.27655, 0, 0, 0 )
 shape = SubResource( 9 )
+
+[node name="addTime" type="Area" parent="."]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -0.796266, 17.1004, -149.419 )
+script = ExtResource( 12 )
+
+[node name="mesh" type="MeshInstance" parent="addTime"]
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
+
+[node name="CollisionShape" type="CollisionShape" parent="addTime"]
+shape = SubResource( 13 )
 [connection signal="timeout" from="explodeNumber/showTimer" to="explodeNumber" method="_on_showTimer_timeout"]
 [connection signal="body_entered" from="mace1" to="." method="_on_mace1_body_entered"]
 [connection signal="body_entered" from="mace2" to="." method="_on_mace2_body_entered"]
 [connection signal="body_entered" from="mace3" to="." method="_on_mace3_body_entered"]
+[connection signal="body_entered" from="addTime" to="hub" method="_on_addTime_body_entered"]

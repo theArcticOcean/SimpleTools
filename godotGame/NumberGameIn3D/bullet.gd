@@ -1,6 +1,6 @@
 extends Spatial
 
-var speed = 50
+var speed = 200
 var velocity = Vector3()
 onready var timer = get_node("Timer")  #onready make sure everything is set up
 signal sig_clear_result

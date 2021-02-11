@@ -4,7 +4,7 @@ var number: Array
 var operator: String
 var content: String
 onready var numGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
-onready var restSecCount = get_node( "checkPointTimer" ).get_wait_time()
+onready var waitSecsCount = get_node( "checkPointTimer" ).get_wait_time()
 export var g_PlayerAlive: bool = true
 
 func ShowGameOverUI( gameOver ):
@@ -34,7 +34,7 @@ func ShowGameOverUI( gameOver ):
 func _ready():
 	numGenerator.randomize()
 	ShowGameOverUI( false )
-	$checkPointTimer.start( restSecCount )
+	$checkPointTimer.start( waitSecsCount )
 	$checkPointTimer.connect("timeout", get_tree().root.get_node("World"), "_on_checkPointTimer_timeout" )
 	$restartButton.connect("button_up", get_tree().root.get_node("World"), "_on_restartButton_down" )
 
@@ -79,7 +79,7 @@ func IsResultRight():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$progressBar.value = $checkPointTimer.time_left / restSecCount * 100
+	$progressBar.value = $checkPointTimer.time_left / waitSecsCount * 100
 
 func _on_checkPointTimer_timeout():
 	if IsResultRight():
@@ -101,6 +101,14 @@ func OnChooseNumber():
 		generateContent()
 		updateLabel()
 		$resultLabel.text = ""
-		$checkPointTimer.start( restSecCount )
+		$checkPointTimer.start(waitSecsCount)
 		return true
 	return false
+
+func _on_addTime_body_entered(body):
+	if body is KinematicBody:
+		var timeCount = $checkPointTimer.get_wait_time()
+		var newTimeCount = $checkPointTimer.time_left + 10
+		if newTimeCount > timeCount:
+			newTimeCount = timeCount
+		$checkPointTimer.start( newTimeCount )

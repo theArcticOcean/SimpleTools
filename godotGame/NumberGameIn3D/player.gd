@@ -17,6 +17,16 @@ func _ready():
 	pass
 
 func _unhandled_input(event):
+	if Input.is_action_just_pressed("KEY_ESCAPE"):
+		captured = !captured
+
+	if captured:
+		# Locks the mouse in the center of the screen
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
+	else:
+		# Unlocks the mouse from the center of the screen
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+
 	if Input.is_action_just_pressed("mouse_left_click"):
 		var fireball = FIREBALL.instance()
 		add_child( fireball )
@@ -32,16 +42,6 @@ func _input( event ):
 		nothing_pressed = true
 
 func _physics_process( delta ):
-	if Input.is_action_just_pressed("KEY_ESCAPE"):
-		captured = !captured
-
-	if captured:
-		# Locks the mouse in the center of the screen
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
-	else:
-		# Unlocks the mouse from the center of the screen
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-
 	if Input.is_action_pressed("turn_head"):
 		if Input.is_action_pressed( "move_left" ):
 			rotate_y( PI/180 )

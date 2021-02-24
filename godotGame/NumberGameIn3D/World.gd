@@ -26,12 +26,13 @@ func PutNumbers():
 	posArray.append( get_node("Environment/land").global_transform.origin )
 	posArray.append( get_node("Environment/floorA").global_transform.origin )
 	posArray.append( get_node("Environment/floorB").global_transform.origin )
+	var numsPos = []
 	for i in range(0, 3):
 		var pos = posArray[i]
 		for j in range(0, 10):
 			var number = NUMBER_OBJ.instance()
 			number.Prepare()
-			number.InitNumber( j, pos )
+			numsPos.append( number.InitNumber( j, pos, numsPos ) )
 			numbers.append( number )
 			add_child( number )
 

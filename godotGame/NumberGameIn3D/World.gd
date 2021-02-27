@@ -52,6 +52,7 @@ func _on_restartButton_down():
 	numbers.clear()
 	PutNumbers()
 	clear_instance.PutNewPos()
+	$player.onReplay()
 
 func _on_generate_right_result():
 	for number in numbers:

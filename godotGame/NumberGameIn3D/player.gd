@@ -16,6 +16,9 @@ onready var musicContainer: Node = get_parent().get_node("musics")
 func _ready():
 	pass
 
+func onReplay():
+	global_transform.origin = Vector3( 0, 12.015, -28.702 )
+
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("KEY_ESCAPE"):
 		captured = !captured
@@ -83,5 +86,5 @@ func _physics_process( delta ):
 	
 	velocity = move_and_slide( velocity, Vector3.UP )
 
-	if Input.is_action_pressed("jump"):
-		velocity.y -= delta * gravity * 3
+	#if Input.is_action_pressed("jump"):
+	#	velocity.y -= delta * gravity * 3

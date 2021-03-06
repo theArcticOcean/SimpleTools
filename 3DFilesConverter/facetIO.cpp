@@ -22,10 +22,12 @@ void facetIO::Read(std::string filePath)
     m_Data = reader->GetOutput();
 }
 
-void facetIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
+std::string facetIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     vtkSmartPointer<vtkFacetWriter> writer = vtkSmartPointer<vtkFacetWriter>::New();
     writer->SetInputData( data );
     writer->SetFileName( filePath.c_str() );
     writer->Write();
+
+    return filePath;
 }

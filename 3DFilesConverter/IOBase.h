@@ -14,7 +14,7 @@ public:
     virtual ~IOBase();
     virtual void Read(std::string filePath){}
     vtkSmartPointer<vtkPolyData> GetData();
-    virtual void Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){}
+    virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){ return ""; }
     static std::string GetBaseName(std::string filePath);
     static int RemoveDir(const char *dir);
 protected:

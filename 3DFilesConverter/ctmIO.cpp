@@ -2,6 +2,10 @@
 
 #include "point.hpp"
 
+#include <vtkPointData.h>
+#include <vtkDataArray.h>
+#include <vtkCellData.h>
+
 ctmIO::ctmIO()
 {
 

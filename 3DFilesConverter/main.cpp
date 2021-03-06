@@ -49,7 +49,7 @@ int main( int argc, char **argv )
         std::string folder;
         if( !reader->Read( file_name ) )
         {
-            std::cout << "read file failed" << endl;
+            std::cout << INVALID_FILE << endl;
             return -1;
         }
 

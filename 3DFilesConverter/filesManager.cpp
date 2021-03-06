@@ -18,14 +18,14 @@ std::string filesManager::unzip(std::string filePath)
 {
     if( !endsWith( filePath, ".zip" ) )
     {
-        return "NAN.txt";
+        return INVALID_FILE;
     }
     std::string baseName = filesManager::GetInstance()->GetBaseName( filePath );
     Log( IInfo, filePath, ", ", baseName );
     zipper::Unzipper unzipper( filePath );
     if( !unzipper.extract( baseName ) ){
         unzipper.close();
-        return "NAN.txt";
+        return INVALID_FILE;
     }
     unzipper.close();
     return baseName;
@@ -83,7 +83,7 @@ bool filesManager::FindFilePath(std::string suffix, std::string folderPath, std:
         }
     }
     closedir(dir);
-    result = "NAN.txt";
+    result = INVALID_FILE;
     return false;
 }
 

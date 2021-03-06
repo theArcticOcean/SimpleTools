@@ -84,7 +84,7 @@ std::string byuIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath
     if ( mkdir( baseName.c_str(), 0777) )
     {
         Log( IError, strerror(errno) );
-        return "NAN.txt";
+        return INVALID_FILE;
     }
 
     vtkSPtrNew( writer, vtkBYUWriter );

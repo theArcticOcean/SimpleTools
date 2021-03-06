@@ -47,7 +47,7 @@ bool gltfIO::Read(std::string filePath)
     }
 
     Log( IInfo, "folder: ", folder );
-    std::string file_name = "NAN.txt";
+    std::string file_name = INVALID_FILE;
     std::string tmp;
     if( filesManager::GetInstance()->FindFilePath( ".gltf", folder, tmp ) ) {
         file_name = tmp;
@@ -98,7 +98,7 @@ std::string gltfIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePat
     if ( mkdir( baseName.c_str(), 0777) )
     {
         Log( IError, strerror(errno) );
-        return "NAN.txt";
+        return INVALID_FILE;
     }
     auto newFilePath = baseName + "/result.gltf";
 

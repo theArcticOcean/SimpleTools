@@ -6,6 +6,10 @@
 #include <zlib.h>
 #include <string>
 
+#ifndef INVALID_FILE
+#define INVALID_FILE "NAN.txt"
+#endif
+
 class filesManager
 {
 public:

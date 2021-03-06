@@ -57,6 +57,7 @@ bool gltfIO::Read(std::string filePath)
         return false;
     }
 
+    Log( IInfo, "file_name: ", file_name );
     vtkSPtrNew( importer, MyGLTFImporter );
 
     vtkSPtrNew( mapper, vtkPolyDataMapper );
@@ -74,7 +75,7 @@ bool gltfIO::Read(std::string filePath)
     vtkSPtrNew( renderWindowInteractor, vtkRenderWindowInteractor );
     renderWindowInteractor->SetRenderWindow( renderWindow );
 
-    importer->SetFileName( filePath.c_str() );
+    importer->SetFileName( file_name.c_str() );
     importer->SetRenderWindow( renderWindow );
     importer->Read();
 

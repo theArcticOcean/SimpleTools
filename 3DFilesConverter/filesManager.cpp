@@ -7,26 +7,32 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <zipper/zipper.h>
+#include <zipper/unzipper.h>
 
 /*
-*   command format: 'unzip -d gltf.zip'
+*   use zipper library: https://github.com/sebastiandev/zipper
 *   return folder path.
 */
 std::string filesManager::unzip(std::string filePath)
 {
     if( !endsWith( filePath, ".zip" ) )
     {
-        return "";
-    }    
+        return "NAN.txt";
+    }
     std::string baseName = filesManager::GetInstance()->GetBaseName( filePath );
-    std::string commandStr = "unzip -d " + baseName + " " + filePath;
-    int ret = system( commandStr.c_str() );
-    Log( IInfo, "commandStr: ", commandStr );
+    Log( IInfo, filePath, ", ", baseName );
+    zipper::Unzipper unzipper( filePath );
+    if( !unzipper.extract( baseName ) ){
+        unzipper.close();
+        return "NAN.txt";
+    }
+    unzipper.close();
     return baseName;
 }
 
 /*
-*   command format: 'zip -j gltf.zip gltf/*'
+*   use zipper library: https://github.com/sebastiandev/zipper
 *   return zip file path.
 */
 std::string filesManager::zip(std::string folderPath)
@@ -36,9 +42,9 @@ std::string filesManager::zip(std::string folderPath)
     {
         RemoveDir( zipPath.c_str() );
     }
-    std::string commandStr = "zip -j " + zipPath + " " + folderPath + "/*";
-    int ret = system( commandStr.c_str() );
-    Log( IInfo, "ret: ", ret );
+    zipper::Zipper zipper( zipPath );
+    zipper.add( folderPath );
+    zipper.close();
     return zipPath;
 }
 
@@ -66,7 +72,7 @@ bool filesManager::FindFilePath(std::string suffix, std::string folderPath, std:
         if( endsWith( p->d_name, suffix ) )
         {
             path = folderPath;
-            if( endsWith( path, "/" ) )
+            while( endsWith( path, "/" ) )
             {
                 path = path.substr(0, path.size() - 1);
             }
@@ -77,6 +83,7 @@ bool filesManager::FindFilePath(std::string suffix, std::string folderPath, std:
         }
     }
     closedir(dir);
+    result = "NAN.txt";
     return false;
 }
 

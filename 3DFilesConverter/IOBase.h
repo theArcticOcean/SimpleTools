@@ -15,6 +15,7 @@ public:
     virtual bool Read(std::string filePath){ return true; }
     vtkSmartPointer<vtkPolyData> GetData();
     virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){ return ""; }
+
 protected:
     vtkSmartPointer<vtkPolyData> m_Data;
 };

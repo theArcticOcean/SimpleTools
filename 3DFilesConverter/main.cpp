@@ -47,7 +47,6 @@ int main( int argc, char **argv )
     if( reader && writer )
     {
         std::string folder;
-
         if( !reader->Read( file_name ) )
         {
             std::cout << "read file failed" << endl;

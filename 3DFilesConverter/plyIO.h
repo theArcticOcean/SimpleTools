@@ -11,6 +11,6 @@ class plyIO: public IOBase
 public:
     plyIO();
     ~plyIO();
-    virtual void Read(std::string filePath);
+    virtual bool Read(std::string filePath);
     virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
 };

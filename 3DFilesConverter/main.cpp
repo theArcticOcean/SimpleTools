@@ -16,8 +16,9 @@
 #include "vtkIO.h"
 #include "gltfIO.h"
 #include "facetIO.h"
-#include "zipManager.h"
+#include "filesManager.h"
 #include "ctmIO.h"
+#include "byuIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -39,61 +40,26 @@ int main( int argc, char **argv )
     IOBase *reader = nullptr;
     IOBase *writer = nullptr;
     vtkDataObject *data = nullptr;
-    zipManager zipper;
     ChooseReader( reader, old_suffix );
     ChooseWriter( writer, new_suffix );
     Log( IInfo, reader, ", ", writer );
 
     if( reader && writer )
     {
-        // unzip compressed file.
-        if( zipper.endsWith( file_name, ".zip" ) )
+        std::string folder;
+
+        if( !reader->Read( file_name ) )
         {
-            std::string folder = IOBase::GetBaseName( file_name );
-            if ( access( folder.c_str(), F_OK ) == 0 )
-            {
-                IOBase::RemoveDir( folder.c_str() );
-            }
-            folder = zipper.unzip( file_name );
-            std::string file = zipper.FindFilePath( ".gltf", folder );
-            file_name = file;
-            Log( IInfo, "file_name: ", file_name );
+            std::cout << "read file failed" << endl;
+            return -1;
         }
 
-        reader->Read( file_name );
         data = reader->GetData();
-        std::string baseName = reader->GetBaseName( file_name );
+
+        std::string baseName = filesManager::GetInstance()->GetBaseName( file_name );
         std::string newFilePath = baseName + "." + new_suffix;
+        newFilePath = writer->Write( (vtkPolyData*)data, newFilePath );
 
-        Log( IInfo, "baseName: ", baseName );
-        // create folder if the output file is special format.
-        if( new_suffix == "gltf" )
-        {
-            if ( access( baseName.c_str(), F_OK ) == 0 )
-            {
-                Log( IInfo, "start to remove dir" );
-                IOBase::RemoveDir( baseName.c_str() );
-            }
-            if ( mkdir( baseName.c_str(), 0777) )
-            {
-                Log( IError, strerror(errno) );
-                return -1;
-            }
-            newFilePath = baseName + "/result." + new_suffix;
-        }
-
-        if ( access( newFilePath.c_str(), F_OK ) == 0 )
-        {
-            Log( IInfo, "start to remove exist file" );
-            IOBase::RemoveDir( newFilePath.c_str() );
-        }
-        writer->Write( (vtkPolyData*)data, newFilePath );
-
-        if( new_suffix == "gltf" )
-        {
-            // compress files for special format such as gltf
-            newFilePath = zipper.zip( baseName );
-        }
         Log( IInfo, newFilePath );
         std::cout << newFilePath << std::endl;
     }
@@ -138,6 +104,10 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new ctmIO();
     }
+    else if( old_suffix == "byu" )
+    {
+        reader = new byuIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -173,6 +143,10 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "ctm" )
     {
         writer = new ctmIO();
+    }
+    else if( new_suffix == "byu" )
+    {
+        writer = new byuIO();
     }
 }
 

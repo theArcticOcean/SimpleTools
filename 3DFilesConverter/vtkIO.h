@@ -11,6 +11,6 @@ class vtkIO: public IOBase
 public:
     vtkIO();
     ~vtkIO();
-    virtual void Read(std::string filePath);
+    virtual bool Read(std::string filePath);
     virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
 };

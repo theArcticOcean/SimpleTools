@@ -1,10 +1,13 @@
 #include "ctmIO.h"
-
 #include "point.hpp"
+#include "ULog.h"
+#include "filesManager.h"
 
 #include <vtkPointData.h>
 #include <vtkDataArray.h>
 #include <vtkCellData.h>
+#include <vtkDoubleArray.h>
+#include <unistd.h>
 
 ctmIO::ctmIO()
 {
@@ -16,7 +19,7 @@ ctmIO::~ctmIO()
 
 }
 
-void ctmIO::Read(std::string filePath)
+bool ctmIO::Read(std::string filePath)
 {
     CTMimporter ctm;
     ctm.Load( filePath.c_str() );
@@ -25,10 +28,14 @@ void ctmIO::Read(std::string filePath)
     const CTMfloat *vertices = ctm.GetFloatArray(CTM_VERTICES);
     CTMuint triCount = ctm.GetInteger(CTM_TRIANGLE_COUNT);
     const CTMuint *indices = ctm.GetIntegerArray(CTM_INDICES);
+    const CTMfloat *scalars1 = ctm.GetFloatArray( CTM_ATTRIB_MAP_1 );
+    const CTMfloat *scalars2 = ctm.GetFloatArray( CTM_ATTRIB_MAP_2 );
 
     vtkSmartPointer<vtkPolyData> newPd = vtkSmartPointer<vtkPolyData>::New();
     vtkSmartPointer<vtkPoints> newPoints = vtkSmartPointer<vtkPoints>::New();
     vtkSmartPointer<vtkCellArray> newCells = vtkSmartPointer<vtkCellArray>::New();
+    vtkSmartPointer<vtkDoubleArray> ptScalars = vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> cellScalars = vtkSmartPointer<vtkDoubleArray>::New();
 
     for( CTMuint i = 0; i < vertCount; ++i )
     {
@@ -48,15 +55,34 @@ void ctmIO::Read(std::string filePath)
         }
         newCells->InsertNextCell( 3, cell );
     }
+    for( CTMuint i = 0; i < vertCount; ++i )
+    {
+        ptScalars->InsertNextTuple1( scalars1[4*i] );
+    }
+    for ( CTMuint i = 0; i < triCount; ++i )
+    {
+        cellScalars->InsertNextTuple1( scalars2[4*i] );
+    }
+
     newPd->SetPoints( newPoints );
     newPd->SetPolys( newCells );
+    newPd->GetPointData()->SetScalars( ptScalars );
+    newPd->GetCellData()->SetScalars( cellScalars );
     newPd->Modified();
 
     m_Data->DeepCopy( newPd );
+
+    return true;
 }
 
-void ctmIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
+std::string ctmIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
+    if ( access( filePath.c_str(), F_OK ) == 0 )
+    {
+        Log( IInfo, "start to remove exist file" );
+        filesManager::GetInstance()->RemoveDir( filePath.c_str() );
+    }
+
     vtkPoints *points = data->GetPoints();
     CTMuint aVertCount = static_cast<unsigned int>( points->GetNumberOfPoints() );
     CTMfloat *aVertices = new CTMfloat[3*aVertCount];
@@ -79,18 +105,59 @@ void ctmIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
         }
     }
 
-    SaveFile( aVertCount, aTriCount, aVertices, aIndices, filePath.c_str(), nullptr, nullptr );
+    CTMfloat *ptScalars = new CTMfloat[aVertCount*4];
+    if( data->GetPointData() && data->GetPointData()->GetScalars() )
+    {
+        auto scalars = data->GetPointData()->GetScalars();
+        for( CTMuint i = 0; i < aVertCount; ++i )
+        {
+            ptScalars[i*4] = scalars->GetTuple1( i );
+        }
+    }
+    else {
+        for( CTMuint i = 0; i < aVertCount; ++i )
+        {
+            ptScalars[i*4] = 1;
+        }
+    }
+
+    CTMfloat *cellScalars = new CTMfloat[aTriCount*4];
+    if( data->GetCellData() && data->GetCellData()->GetScalars() )
+    {
+        auto scalars = data->GetCellData()->GetScalars();
+        for( CTMuint i = 0; i < aTriCount; ++i )
+        {
+            cellScalars[i*4] = scalars->GetTuple1( i );
+        }
+    }
+    else {
+        for( CTMuint i = 0; i < aTriCount; ++i )
+        {
+            cellScalars[i*4] = 1;
+        }
+    }
+
+    SaveFile( aVertCount, aTriCount, aVertices, aIndices, filePath.c_str(),
+              ptScalars, "ptScalars",
+              cellScalars, "cellScalars" );
 
     delete [] aVertices;
     aVertices = nullptr;
     delete [] aIndices;
     aIndices = nullptr;
+    delete [] ptScalars;
+    ptScalars = nullptr;
+    delete [] cellScalars;
+    cellScalars = nullptr;
+
+    return filePath;
 }
 
 void ctmIO::SaveFile(CTMuint aVertCount, CTMuint aTriCount,
                      CTMfloat *aVertices, CTMuint *aIndices,
                      const char *aFileName,
-                     const CTMfloat *aAttribValues, const char *aName)
+                     const CTMfloat *aAttribValues0, const char *aName0,
+                     const CTMfloat *aAttribValues1, const char *aName1)
 {
     try
     {
@@ -100,6 +167,13 @@ void ctmIO::SaveFile(CTMuint aVertCount, CTMuint aTriCount,
         // Define our mesh representation to OpenCTM (store references to it in
         // the context)
         ctm.DefineMesh(aVertices, aVertCount, aIndices, aTriCount, NULL);
+
+        if( aAttribValues0 ) {
+            ctm.AddAttribMap( aAttribValues0, aName0 );
+        }
+        if( aAttribValues1 ) {
+            ctm.AddAttribMap( aAttribValues1, aName1 );
+        }
 
         // Save the OpenCTM file
         ctm.Save(aFileName);

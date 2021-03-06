@@ -31,13 +31,15 @@ add_executable(${PROJECT_NAME}
     "gltfIO.cpp"
     "vtkIO.h"
     "vtkIO.cpp"
-    "zipManager.h"
-    "zipManager.cpp"
+    "filesManager.h"
+    "filesManager.cpp"
     "facetIO.h"
     "facetIO.cpp"
     "point.hpp"
     "ctmIO.h"
     "ctmIO.cpp"
+    "byuIO.h"
+    "byuIO.cpp"
     )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} openctm )

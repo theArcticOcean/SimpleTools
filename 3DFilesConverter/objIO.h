@@ -11,6 +11,6 @@ class objIO : public IOBase
 public:
     objIO();
     ~objIO();
-    virtual void Read(std::string filePath);
+    virtual bool Read(std::string filePath);
     virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
 };

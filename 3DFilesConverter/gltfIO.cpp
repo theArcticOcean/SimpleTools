@@ -55,7 +55,7 @@ void gltfIO::Read(std::string filePath)
     m_Data = importer->GetMesh();
 }
 
-void gltfIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
+std::string gltfIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     vtkSPtrNew( exporter, vtkGLTFExporter );
 
@@ -75,4 +75,6 @@ void gltfIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
     exporter->SetRenderWindow( renderWindow );
     exporter->SetFileName( filePath.c_str() );
     exporter->Write();
+
+    return filePath;
 }

@@ -1,4 +1,4 @@
-#include "zipManager.h"
+#include "filesManager.h"
 #include "ULog.h"
 #include "IOBase.h"
 #include <dirent.h>
@@ -8,7 +8,7 @@
 *   command format: 'unzip -d gltf.zip'
 *   return folder path.
 */
-std::string zipManager::unzip(std::string filePath)
+std::string filesManager::unzip(std::string filePath)
 {
     if( !endsWith( filePath, ".zip" ) )
     {
@@ -25,7 +25,7 @@ std::string zipManager::unzip(std::string filePath)
 *   command format: 'zip -j gltf.zip gltf/*'
 *   return zip file path.
 */
-std::string zipManager::zip(std::string folderPath)
+std::string filesManager::zip(std::string folderPath)
 {
     std::string zipPath = folderPath + ".zip";
     if ( access( zipPath.c_str(), F_OK ) == 0 )
@@ -38,7 +38,7 @@ std::string zipManager::zip(std::string folderPath)
     return zipPath;
 }
 
-std::string zipManager::FindFilePath(std::string suffix, std::string folderPath)
+bool filesManager::FindFilePath(std::string suffix, std::string folderPath, std::string &result)
 {
     DIR* dir = opendir( folderPath.c_str() );
     dirent* p = nullptr;
@@ -52,10 +52,10 @@ std::string zipManager::FindFilePath(std::string suffix, std::string folderPath)
         if( p->d_type == DT_DIR )
         {
             Log( IInfo, "p->d_name: ", (folderPath + "/" + p->d_name) );
-            std::string tmp = FindFilePath( suffix, folderPath + "/" + p->d_name );
-            if( tmp.size() > 0 )
-            {
-                return tmp;
+            auto flag = FindFilePath( suffix, folderPath + "/" + p->d_name, result );
+            if( flag ) {
+                closedir(dir);
+                return true;
             }
         }
 
@@ -67,14 +67,16 @@ std::string zipManager::FindFilePath(std::string suffix, std::string folderPath)
                 path = path.substr(0, path.size() - 1);
             }
             path = path + "/" + p->d_name;
+            result = path;
+            closedir(dir);
+            return true;
         }
     }
     closedir(dir);
-    Log( IInfo, "path: ", path );
-    return path;
+    return false;
 }
 
-bool zipManager::endsWith(const std::string &mainStr, const std::string &toMatch)
+bool filesManager::endsWith(const std::string &mainStr, const std::string &toMatch)
 {
     if( mainStr.size() >= toMatch.size() &&
         mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0 )
@@ -85,4 +87,9 @@ bool zipManager::endsWith(const std::string &mainStr, const std::string &toMatch
     {
         return false;
     }
+}
+
+filesManager::filesManager()
+{
+
 }

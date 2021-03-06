@@ -22,10 +22,12 @@ void objIO::Read(std::string filePath)
     m_Data = reader->GetOutput();
 }
 
-void objIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
+std::string objIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     vtkSmartPointer<vtkOBJWriter> writer = vtkSmartPointer<vtkOBJWriter>::New();
     writer->SetInputData( data );
     writer->SetFileName( filePath.c_str() );
     writer->Write();
+
+    return filePath;
 }

@@ -22,10 +22,12 @@ void plyIO::Read(std::string filePath)
     m_Data = reader->GetOutput();
 }
 
-void plyIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
+std::string plyIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     vtkSmartPointer<vtkPLYWriter> writer = vtkSmartPointer<vtkPLYWriter>::New();
     writer->SetInputData( data );
     writer->SetFileName( filePath.c_str() );
     writer->Write();
+
+    return filePath;
 }

@@ -22,10 +22,12 @@ void vtpIO::Read(std::string filePath)
     m_Data = reader->GetOutput();
 }
 
-void vtpIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
+std::string vtpIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     vtkSmartPointer<vtkXMLPolyDataWriter> writer = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
     writer->SetInputData( data );
     writer->SetFileName( filePath.c_str() );
     writer->Write();
+
+    return filePath;
 }

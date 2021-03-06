@@ -12,5 +12,5 @@ public:
     vtpIO();
     ~vtpIO();
     virtual void Read(std::string filePath);
-    virtual void Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
+    virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
 };

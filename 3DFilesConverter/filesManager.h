@@ -6,11 +6,19 @@
 #include <zlib.h>
 #include <string>
 
-class zipManager
+class filesManager
 {
 public:
+    static filesManager *GetInstance()
+    {
+        static filesManager g_FilesManager;
+        return &g_FilesManager;
+    }
+
     std::string unzip( std::string filePath );
     std::string zip( std::string folderPath );
-    std::string FindFilePath( std::string suffix, std::string folderPath );
+    bool FindFilePath( std::string suffix, std::string folderPath, std::string &result );
     bool endsWith( const std::string &mainStr, const std::string &toMatch );
+protected:
+    filesManager();
 };

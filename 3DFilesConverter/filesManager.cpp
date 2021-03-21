@@ -14,8 +14,13 @@
 #include <vtkImageMarchingCubes.h>
 #include <vtkPointData.h>
 #include <vtkDataArray.h>
+#include <vtkLookupTable.h>
 #include <vtkFillHolesFilter.h>
+#include <vtkScalarsToColors.h>
 #include <vtkPolyDataNormals.h>
+#include <vtkImageToPolyDataFilter.h>
+#include <vtkImageQuantizeRGBToIndex.h>
+#include <vtkTriangleFilter.h>
 
 /*
 *   use zipper library: https://github.com/sebastiandev/zipper
@@ -240,10 +245,13 @@ vtkSmartPointer<vtkPolyData> filesManager::ConvertImageToPolydata(vtkImageData *
     marchingCubes->SetNumberOfContours( 1 );
     marchingCubes->Update();
 
+    Log( IInfo, "number cell: ", marchingCubes->GetOutput()->GetNumberOfCells() );
+
     // Fill the holes
     auto fillHoles = vtkSmartPointer<vtkFillHolesFilter>::New();
     fillHoles->SetInputConnection( marchingCubes->GetOutputPort() );
     fillHoles->SetHoleSize(1000.0);
+    fillHoles->Update();
 
     // Make the triangle winding order consistent
     auto normals = vtkSmartPointer<vtkPolyDataNormals>::New();
@@ -256,5 +264,7 @@ vtkSmartPointer<vtkPolyData> filesManager::ConvertImageToPolydata(vtkImageData *
 
     vtkSPtrNew( polyData, vtkPolyData );
     polyData->DeepCopy( normals->GetOutput() );
+
+    Log( IInfo, "polyData cell count: ", polyData->GetNumberOfCells() );
     return polyData;
 }

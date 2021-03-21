@@ -51,6 +51,7 @@ int main( int argc, char **argv )
         std::string folder;
         if( !reader->Read( file_name ) )
         {
+            Log( IError, "read filed: ", old_suffix );
             std::cout << INVALID_FILE << endl;
             return -1;
         }

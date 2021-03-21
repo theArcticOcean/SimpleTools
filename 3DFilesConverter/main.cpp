@@ -19,6 +19,8 @@
 #include "filesManager.h"
 #include "ctmIO.h"
 #include "byuIO.h"
+#include "demIO.h"
+#include "tiffIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -107,6 +109,14 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new byuIO();
     }
+    else if( old_suffix == "dem" )
+    {
+        reader = new demIO();
+    }
+    else if( old_suffix == "tif" )
+    {
+        reader = new tiffIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -146,6 +156,14 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "byu" )
     {
         writer = new byuIO();
+    }
+    else if( new_suffix == "dem" )
+    {
+        writer = new demIO();
+    }
+    else if( new_suffix == "tif" )
+    {
+        writer = new tiffIO();
     }
 }
 

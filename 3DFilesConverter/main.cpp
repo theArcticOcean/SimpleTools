@@ -21,6 +21,7 @@
 #include "byuIO.h"
 #include "demIO.h"
 #include "tiffIO.h"
+#include "3DSIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -61,6 +62,12 @@ int main( int argc, char **argv )
         std::string baseName = filesManager::GetInstance()->GetBaseName( file_name );
         std::string newFilePath = baseName + "." + new_suffix;
         newFilePath = writer->Write( (vtkPolyData*)data, newFilePath );
+        if( newFilePath.length() < 1 )
+        {
+            Log( IError, "write failed: ", newFilePath );
+            std::cout << INVALID_FILE << endl;
+            return -1;
+        }
 
         Log( IInfo, newFilePath );
         std::cout << newFilePath << std::endl;
@@ -118,6 +125,10 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new tiffIO();
     }
+    else if( old_suffix == "3ds" )
+    {
+        reader = new w3DSIO();
+    }
 }
 
 void ChooseWriter( IOBase *&writer, std::string new_suffix )
@@ -165,6 +176,10 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "tif" )
     {
         writer = new tiffIO();
+    }
+    else if( new_suffix == "3ds" )
+    {
+        writer = new w3DSIO();
     }
 }
 

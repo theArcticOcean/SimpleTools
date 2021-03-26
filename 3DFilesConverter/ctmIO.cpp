@@ -28,14 +28,10 @@ bool ctmIO::Read(std::string filePath)
     const CTMfloat *vertices = ctm.GetFloatArray(CTM_VERTICES);
     CTMuint triCount = ctm.GetInteger(CTM_TRIANGLE_COUNT);
     const CTMuint *indices = ctm.GetIntegerArray(CTM_INDICES);
-    const CTMfloat *scalars1 = ctm.GetFloatArray( CTM_ATTRIB_MAP_1 );
-    const CTMfloat *scalars2 = ctm.GetFloatArray( CTM_ATTRIB_MAP_2 );
 
     vtkSmartPointer<vtkPolyData> newPd = vtkSmartPointer<vtkPolyData>::New();
     vtkSmartPointer<vtkPoints> newPoints = vtkSmartPointer<vtkPoints>::New();
     vtkSmartPointer<vtkCellArray> newCells = vtkSmartPointer<vtkCellArray>::New();
-    vtkSmartPointer<vtkDoubleArray> ptScalars = vtkSmartPointer<vtkDoubleArray>::New();
-    vtkSmartPointer<vtkDoubleArray> cellScalars = vtkSmartPointer<vtkDoubleArray>::New();
 
     for( CTMuint i = 0; i < vertCount; ++i )
     {
@@ -55,19 +51,38 @@ bool ctmIO::Read(std::string filePath)
         }
         newCells->InsertNextCell( 3, cell );
     }
-    for( CTMuint i = 0; i < vertCount; ++i )
-    {
-        ptScalars->InsertNextTuple1( scalars1[4*i] );
-    }
-    for ( CTMuint i = 0; i < triCount; ++i )
-    {
-        cellScalars->InsertNextTuple1( scalars2[4*i] );
-    }
 
     newPd->SetPoints( newPoints );
     newPd->SetPolys( newCells );
-    newPd->GetPointData()->SetScalars( ptScalars );
-    newPd->GetCellData()->SetScalars( cellScalars );
+
+    /* try {
+        const CTMfloat *scalars1 = ctm.GetFloatArray( CTM_ATTRIB_MAP_1 );
+        Log( IInfo, "length: ", sizeof (scalars1) / sizeof (scalars1[0]) );
+        vtkSmartPointer<vtkDoubleArray> ptScalars = vtkSmartPointer<vtkDoubleArray>::New();
+        for( CTMuint i = 0; i < vertCount; ++i )
+        {
+            ptScalars->InsertNextTuple1( scalars1[4*i] );
+        }
+
+        newPd->GetPointData()->SetScalars( ptScalars );
+    }
+    catch ( ctm_error ctmErr ) {
+        Log( IWarning, "No point scalar" );
+    }
+
+    try {
+        const CTMfloat *scalars2 = ctm.GetFloatArray( CTM_ATTRIB_MAP_2 );
+        vtkSmartPointer<vtkDoubleArray> cellScalars = vtkSmartPointer<vtkDoubleArray>::New();
+        for ( CTMuint i = 0; i < triCount; ++i )
+        {
+            cellScalars->InsertNextTuple1( scalars2[4*i] );
+        }
+        newPd->GetCellData()->SetScalars( cellScalars );
+    }
+    catch ( ctm_error ctmErr ) {
+        Log( IWarning, "No cell scalar" );
+    } */
+
     newPd->Modified();
 
     m_Data->DeepCopy( newPd );
@@ -105,7 +120,7 @@ std::string ctmIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath
         }
     }
 
-    CTMfloat *ptScalars = new CTMfloat[aVertCount*4];
+    /*CTMfloat *ptScalars = new CTMfloat[aVertCount*4];
     if( data->GetPointData() && data->GetPointData()->GetScalars() )
     {
         auto scalars = data->GetPointData()->GetScalars();
@@ -135,20 +150,20 @@ std::string ctmIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath
         {
             cellScalars[i*4] = 1;
         }
-    }
+    } */
 
     SaveFile( aVertCount, aTriCount, aVertices, aIndices, filePath.c_str(),
-              ptScalars, "ptScalars",
-              cellScalars, "cellScalars" );
+              nullptr, nullptr,   //ptScalars, "ptScalars",
+              nullptr, nullptr ); //cellScalars, "cellScalars" );
 
     delete [] aVertices;
     aVertices = nullptr;
     delete [] aIndices;
     aIndices = nullptr;
-    delete [] ptScalars;
+    /*delete [] ptScalars;
     ptScalars = nullptr;
     delete [] cellScalars;
-    cellScalars = nullptr;
+    cellScalars = nullptr;*/
 
     return filePath;
 }

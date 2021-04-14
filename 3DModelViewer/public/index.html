@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <link rel='stylesheet' id='bootstrap-css'  href='./myBoot.css?ver=1.0.2' type='text/css' /> 
+    <style type="text/css">
+    .instructions{
+      margin: auto;
+      width: 60%;
+      border:0px solid #73AD21;
+      padding: 10px;
+    }
+
+    #viewer-tool {
+      margin: 0px;
+      width: 200px;
+      height: 100%;
+      background-color: #f1f1f1;
+      position: absolute;
+    }
+
+    #webgl-output {
+      margin-left: 205px;
+      margin-right:40px;
+      height: 100%;
+      border:green 1px solid;
+    }
+    </style>
+    <script type="text/javascript">
+      var isDebug = false;    
+      if( false == isDebug ) {
+        document.oncontextmenu = function () {
+          // 返回false时即可禁用右键，菜单不会显示
+          return false
+        }
+    
+        // forbid F12
+        document.onkeydown = document.onkeyup = document.onkeypress = function(event)
+        {
+          var e = event || window.event || arguments.callee.caller.arguments[0];
+          if (e && e.keyCode == 123) {
+            e.returnValue = false;
+            console.log( "forbid F12" );
+            return (false);
+          }
+        }
+      }
+    </script>
+    <title>React App</title>        
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+    <ul class="nav nav-tabs">
+      <li><a href="https://www.weiy.city/" data-toggle=tab">HOME</a></li>
+      <li><a href="https://www.weiy.city/blog/" data-toggle=tab">BLOG</a></li>
+      <li><a href="https://www.weiy.city/image-processing/" data-toggle=tab">IMAGE PROCESSING</a></li>
+      <li><a href="https://www.weiy.city/tools/" data-toggle=tab">TOOLS</a></li>
+      <li><a href="https://www.weiy.city/download/" data-toggle=tab">RESOURCE</a></li>
+    </ul>
+
+  
+    <!-- tool --->
+    <div id="viewer-tool">
+    </div>
+
+    <!-- Div which will hold the Output -->
+    <div id="webgl-output">
+    </div>
+</div>
+  </body>
+</html>

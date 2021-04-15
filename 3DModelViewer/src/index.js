@@ -16,14 +16,19 @@ class NavTools extends React.Component {
         </div>,
         <hr key="navTopSplit" id="navTopSplit"/>,
 
-        <div key="wireframeToggleTitle" id="wireframeToggleTitle"> show wireframe: </div>,
+        <div key="wireframeToggleTitle" id="wireframeToggleTitle">&nbsp; show wireframe: </div>,
         <div key="wireframeToggle" id="wireframeToggle" className="close1">
             <div id="wireframeToggleCore" className="close2"></div>
         </div>,<br/>,<br/>,
-        <div key="axesHelperTitle" id="axesHelperTitle"> show axes: </div>,
+        <div key="axesHelperTitle" id="axesHelperTitle">&nbsp; show axes: </div>,
         <div key="axesVisibleToggle" id="axesVisibleToggle" className="open1">
             <div id="axesVisibleCore" className="open2"></div>
-        </div>
+        </div>,<br/>,<br/>,
+        <div key="pickPointTitle" id="pickPointTitle">&nbsp; pick point: </div>,
+        <div key="pickPointToggle" id="pickPointToggle" className="close1">
+            <div id="pickPointCore" className="close2"></div>
+        </div>,<br/>,
+        <div key="pickPointResult" id="pickPointResult"></div>
       ] );
   }
 }

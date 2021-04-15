@@ -3,13 +3,15 @@
 }
 
 #wireframeToggleTitle,
-#axesHelperTitle{
+#axesHelperTitle,
+#pickPointTitle{
     position: absolute;
     left: 0;
 }
 
 #wireframeToggle,
-#axesVisibleToggle{
+#axesVisibleToggle,
+#pickPointToggle{
     width: 40px;
     height: 20px;
     border-radius: 10px;
@@ -18,7 +20,8 @@
 }
 
 #axesVisibleCore,
-#wireframeToggleCore{
+#wireframeToggleCore,
+#pickPointCore{
     width: 20px;
     height: 20px;
     border-radius: 7px;
@@ -36,6 +39,10 @@
     text-align: center;
     /* border:1px solid black; */
     margin: 0 auto;
+}
+
+#pickPointResult{
+    border:1px solid gray;
 }
 
 #my_3d_files_converter{

@@ -8,14 +8,21 @@ var containerH = window.innerHeight;
 var mesh = null;
 var waitItem;
 var waitImg;
-
 var renderer;
+var rayCaster;
+var mousePosition;
+
 function initRender() {
     renderer = new THREE.WebGLRenderer();
     //0x87CEFA
     renderer.setClearColor(new THREE.Color(0x000000));
     renderer.setSize(containerW, containerH);
     output.appendChild(renderer.domElement);
+}
+
+function initAssisant(){
+    rayCaster = new THREE.Raycaster();
+    mousePosition = new THREE.Vector2();
 }
 
 var camera;
@@ -214,6 +221,41 @@ function ShowAxesHelper( visible ) {
     }
 }
 
+function getClicked3DPoint(evt) {
+    if( evt.clientX < output.offsetLeft || evt.clientY < output.offsetTop )
+    {
+        return null;
+    }
+    evt.preventDefault();
+    mousePosition.x = ((evt.clientX - output.offsetLeft) / output.offsetWidth) * 2 - 1;
+    mousePosition.y = -((evt.clientY - output.offsetTop) / output.offsetHeight) * 2 + 1;
+
+    rayCaster.setFromCamera(mousePosition, camera);
+    var myObjs = new Array();
+    myObjs[0] = mesh;
+
+    var intersects = rayCaster.intersectObjects(myObjs, true);
+    /*An intersection has the following properties :
+                - object : intersected object (THREE.Mesh)
+                - distance : distance from camera to intersection (number)
+                - face : intersected face (THREE.Face3)
+                - faceIndex : intersected face index (number)
+                - point : intersection point (THREE.Vector3)
+                - uv : intersection point in the object's UV coordinates (THREE.Vector2)*/
+    var resultPos = null;
+    if (intersects.length > 0){
+        resultPos = intersects[0].point;
+        var data=[];
+        data = resultPos.toArray( data );
+        console.log( "resultPos: " + resultPos );
+        console.log( "data: " + data );
+
+        var str = "" + data[0] + ", " + data[1] + ", " + data[2];
+        document.getElementById("pickPointResult").innerHTML = str;
+        console.log( str );
+    }
+}
+
 export var mesh3DSetup = function Setup()
 {
     waitItem = document.getElementById('waiting');
@@ -225,6 +267,7 @@ export var mesh3DSetup = function Setup()
     initCamera();
     initControls();
     animate();
+    initAssisant();
     window.onResize = onWindowResize;
     
     window.onload=function(){
@@ -251,6 +294,19 @@ export var mesh3DSetup = function Setup()
             //...
           }else{//toggle 打开状态 切换
             ShowAxesHelper( true );
+          }
+        }
+
+        var pickPointDiv2=document.getElementById("pickPointCore");
+        var pickPointDiv1=document.getElementById("pickPointToggle");
+        pickPointDiv1.onclick=function(){
+            pickPointDiv1.className=(pickPointDiv1.className=="close1")?"open1":"close1";
+            pickPointDiv2.className=(pickPointDiv2.className=="close2")?"open2":"close2";
+          if(pickPointDiv1.className=="close1"){//toggle 关闭状态 切换
+            window.removeEventListener('click', getClicked3DPoint);
+            document.getElementById("pickPointResult").innerHTML = "";
+          }else{//toggle 打开状态 切换
+            window.addEventListener('click', getClicked3DPoint);
           }
         }
     }

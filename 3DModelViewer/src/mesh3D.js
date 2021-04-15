@@ -2,7 +2,6 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader"
 
-var navTools = document.getElementById( "viewer-tool" );
 var output = document.getElementById( "webgl-output" );
 var containerW = output.clientWidth;
 var containerH = window.innerHeight;
@@ -27,11 +26,11 @@ function initCamera() {
 }
 
 var scene;
-var wireframe;
+var axesHelper;
 function initScene() {
     scene = new THREE.Scene();
-    wireframe = new THREE.AxesHelper(200);
-    scene.add(wireframe);
+    axesHelper = new THREE.AxesHelper(200);
+    scene.add(axesHelper);
 }
 
 //用户交互插件 鼠标左键按住旋转，右键按住平移，滚轮缩放
@@ -120,7 +119,6 @@ function LoadSTL( path )
         camera.position.set( (bounds[0] + bounds[1]) / 2, (bounds[2] + bounds[3]) / 2, (bounds[5] - bounds[4])*5 );
         camera.updateProjectionMatrix();
 
-        scene.remove( wireframe );
         HidWaiting();
         animate();
     });
@@ -207,6 +205,15 @@ function HidWaiting() {
     waitItem.style.display = "none";
 }
 
+function ShowAxesHelper( visible ) {
+    if( visible ) {
+        scene.add( axesHelper );
+    }
+    else {
+        scene.remove( axesHelper );
+    }
+}
+
 export var mesh3DSetup = function Setup()
 {
     waitItem = document.getElementById('waiting');
@@ -221,16 +228,29 @@ export var mesh3DSetup = function Setup()
     window.onResize = onWindowResize;
     
     window.onload=function(){
-        var div2=document.getElementById("wireframeToggleCore");
-        var div1=document.getElementById("wireframeToggle");
-        div1.onclick=function(){
-            div1.className=(div1.className=="close1")?"open1":"close1";
-            div2.className=(div2.className=="close2")?"open2":"close2";
-          if(div1.className=="close1"){//toggle 关闭状态 切换
+        var wireDiv2=document.getElementById("wireframeToggleCore");
+        var wireDiv1=document.getElementById("wireframeToggle");
+        wireDiv1.onclick=function(){
+            wireDiv1.className=(wireDiv1.className=="close1")?"open1":"close1";
+            wireDiv2.className=(wireDiv2.className=="close2")?"open2":"close2";
+          if(wireDiv1.className=="close1"){//toggle 关闭状态 切换
             showWireframe( false );
             //...
           }else{//toggle 打开状态 切换
             showWireframe( true );
+          }
+        }
+
+        var axesDiv2=document.getElementById("axesVisibleCore");
+        var axesDiv1=document.getElementById("axesVisibleToggle");
+        axesDiv1.onclick=function(){
+            axesDiv1.className=(axesDiv1.className=="close1")?"open1":"close1";
+            axesDiv2.className=(axesDiv2.className=="close2")?"open2":"close2";
+          if(axesDiv1.className=="close1"){//toggle 关闭状态 切换
+            ShowAxesHelper( false );
+            //...
+          }else{//toggle 打开状态 切换
+            ShowAxesHelper( true );
           }
         }
     }

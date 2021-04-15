@@ -19,6 +19,10 @@ class NavTools extends React.Component {
         <div key="wireframeToggleTitle" id="wireframeToggleTitle"> show wireframe: </div>,
         <div key="wireframeToggle" id="wireframeToggle" className="close1">
             <div id="wireframeToggleCore" className="close2"></div>
+        </div>,<br/>,<br/>,
+        <div key="axesHelperTitle" id="axesHelperTitle"> show axes: </div>,
+        <div key="axesVisibleToggle" id="axesVisibleToggle" className="open1">
+            <div id="axesVisibleCore" className="open2"></div>
         </div>
       ] );
   }

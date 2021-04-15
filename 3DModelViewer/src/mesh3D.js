@@ -6,8 +6,8 @@ var output = document.getElementById( "webgl-output" );
 var containerW = output.clientWidth;
 var containerH = window.innerHeight;
 var mesh = null;
-var waitItem = document.getElementById('waiting');
-var waitImg = document.getElementById('waitImg');
+var waitItem;
+var waitImg;
 
 var renderer;
 function initRender() {
@@ -138,7 +138,7 @@ function showWireframe( visible ) {
 }
 
 
-var mesh3DSub = function subMesh(){
+export var mesh3DSub = function subMesh(){
     var files = document.getElementById("uploadMesh").files;
     if( files == undefined || files == "" )
     {
@@ -150,7 +150,7 @@ var mesh3DSub = function subMesh(){
     var form = new FormData();
     form.append("fileObj", files[0]);
     var xmlRequset = new XMLHttpRequest();
-    var url = "./uploadFile.php";
+    var url = "./uploadFile.php"; //to do
     xmlRequset.open("post", url, true); //post方式，url为服务器请求地址，true 该参数规定请求是否异步处理。
 
     xmlRequset.upload.onprogress = progressFunctionMesh;
@@ -158,6 +158,7 @@ var mesh3DSub = function subMesh(){
     xmlRequset.onerror = uploadFailedMesh;
     xmlRequset.send( form );
 }
+
 function uploadCompleteMesh(evt) {
     var text = evt.target.responseText;
     console.log( text )
@@ -205,8 +206,11 @@ function HidWaiting() {
     waitItem.style.display = "none";
 }
 
-var mesh3DSetup = function Setup()
+export var mesh3DSetup = function Setup()
 {
+    waitItem = document.getElementById('waiting');
+    waitImg = document.getElementById('waitImg');
+
     initRender();
     initScene();
     initLights();
@@ -229,6 +233,6 @@ var mesh3DSetup = function Setup()
           }
         }
     }
-}
 
-export default mesh3DSetup;
+    document.getElementById('subSTLButton').onclick = mesh3DSub;
+}

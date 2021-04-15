@@ -49,7 +49,7 @@
     }
     </style>
     <script type="text/javascript">
-      var isDebug = false;    
+      var isDebug = true;    
       if( false == isDebug ) {
         document.oncontextmenu = function () {
           // 返回false时即可禁用右键，菜单不会显示
@@ -98,6 +98,10 @@
 
     <!-- Div which will hold the Output -->
     <div id="webgl-output">
+    </div>
+
+    <div id="visitCount" align="center">
+      <script type="text/javascript" src="./count.php?prefix=visit"></script>
     </div>
 </div>
   </body>

@@ -2,6 +2,7 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader"
 
+var navTools = document.getElementById( "viewer-tool" );
 var output = document.getElementById( "webgl-output" );
 var containerW = output.clientWidth;
 var containerH = window.innerHeight;
@@ -194,7 +195,7 @@ function progressFunctionMesh(event)
 function ShowWaiting() {
     waitImg.style.position = "absolute";
     var size = renderer.getSize();
-    var w = parseInt( size.width / 2 - waitImg.width / 2 );
+    var w = parseInt( size.width / 2 - waitImg.width / 2 ) + output.offsetLeft;
     var h = parseInt( size.height / 2 - waitImg.height / 2 ) + output.offsetTop;
     console.log( w + ", " + h );
     waitImg.style.left = w.toString() + "px";

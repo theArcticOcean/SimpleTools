@@ -11,6 +11,8 @@ var waitImg;
 var renderer;
 var rayCaster;
 var mousePosition;
+var pickedPt;
+var pickedPtMaterial;
 
 function initRender() {
     renderer = new THREE.WebGLRenderer();
@@ -23,6 +25,12 @@ function initRender() {
 function initAssisant(){
     rayCaster = new THREE.Raycaster();
     mousePosition = new THREE.Vector2();
+    var pickedPtGeometry = new THREE.SphereGeometry(1);
+    pickedPtMaterial = new THREE.MeshBasicMaterial({
+        color: 0xFF0000,
+        wireframe: false
+    });
+    pickedPt = new THREE.Mesh(pickedPtGeometry, pickedPtMaterial);
 }
 
 var camera;
@@ -221,7 +229,7 @@ function ShowAxesHelper( visible ) {
     }
 }
 
-function getClicked3DPoint(evt) {
+function OnClicked3DPoint(evt) {
     if( evt.clientX < output.offsetLeft || evt.clientY < output.offsetTop )
     {
         return null;
@@ -250,9 +258,22 @@ function getClicked3DPoint(evt) {
         console.log( "resultPos: " + resultPos );
         console.log( "data: " + data );
 
-        var str = "" + data[0] + ", " + data[1] + ", " + data[2];
+        var str = "&nbsp;x: " + data[0] + "<br>&nbsp;y: " + data[1] + "<br>&nbsp;z: " + data[2];
         document.getElementById("pickPointResult").innerHTML = str;
         console.log( str );
+
+        const box = new THREE.Box3();
+        box.copy( mesh.geometry.boundingBox ).applyMatrix4( mesh.matrixWorld );
+        var bounds = [ box.min.x, box.max.x, box.min.y, box.max.y, box.min.z, box.max.z ];
+        var radius = Math.min( bounds[1] - bounds[0], bounds[3] - bounds[2], bounds[5] - bounds[4] );
+        radius = 0.001*radius;
+        var pickedPtGeometry = new THREE.SphereGeometry(radius);
+        scene.remove( pickedPt );
+        pickedPt = new THREE.Mesh(pickedPtGeometry, pickedPtMaterial);
+        // position the pickedPt
+        pickedPt.position.set(data[0], data[1], data[2]);
+        // add the pickedPt to the scene
+        scene.add(pickedPt);
     }
 }
 
@@ -303,10 +324,11 @@ export var mesh3DSetup = function Setup()
             pickPointDiv1.className=(pickPointDiv1.className=="close1")?"open1":"close1";
             pickPointDiv2.className=(pickPointDiv2.className=="close2")?"open2":"close2";
           if(pickPointDiv1.className=="close1"){//toggle 关闭状态 切换
-            window.removeEventListener('click', getClicked3DPoint);
+            window.removeEventListener('click', OnClicked3DPoint);
             document.getElementById("pickPointResult").innerHTML = "";
+            scene.remove(pickedPt);
           }else{//toggle 打开状态 切换
-            window.addEventListener('click', getClicked3DPoint);
+            window.addEventListener('click', OnClicked3DPoint);
           }
         }
     }

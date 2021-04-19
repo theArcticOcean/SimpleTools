@@ -44,6 +44,10 @@ add_executable(${PROJECT_NAME}
     "tiffIO.cpp"
     "3DSIO.h"
     "3DSIO.cpp"
+    "x3dIO.h"
+    "x3dIO.cpp"
+    "wrlIO.h"
+    "wrlIO.cpp"
     )
 
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} openctm Zipper)

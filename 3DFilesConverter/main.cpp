@@ -22,6 +22,8 @@
 #include "demIO.h"
 #include "tiffIO.h"
 #include "3DSIO.h"
+#include "x3dIO.h"
+#include "wrlIO.h"
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
@@ -180,6 +182,14 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "3ds" )
     {
         writer = new w3DSIO();
+    }
+    else if( new_suffix == "x3d" )
+    {
+        writer = new x3dIO();
+    }
+    else if( new_suffix == "wrl" )
+    {
+        writer = new wrlIO();
     }
 }
 

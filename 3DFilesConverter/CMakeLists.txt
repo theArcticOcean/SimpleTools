@@ -5,14 +5,12 @@ project(3DFilesConverter)
 find_package( VTK REQUIRED )
 include( ${VTK_USE_FILE} )
 
-set( OPENCTM_LIB_DIR "../OpenCTM-1.0.3/lib" )
+set( USER_INCLUDE_DIR "/usr/local/include" )
+set( USER_LIB_DIR "/usr/local/lib" )
 include_directories( ${OPENCTM_LIB_DIR} )
+include_directories( ${USER_INCLUDE_DIR} )
 link_directories( ${OPENCTM_LIB_DIR} )
-
-#SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-##SET(CMAKE_INSTALL_RPATH "\${ORIGIN}/lib") #the library path, ORIGIN means the path of exe
-#SET(CMAKE_INSTALL_RPATH ${OPENCTM_LIB_DIR} )
-#SET(CMAKE_INSTALL_RPATH "/Users/weiyang/Downloads/tbb/build/macos_intel64_clang_cc11.0.0_os10.15_release/" )
+link_directories( ${USER_LIB_DIR} )
 
 add_executable(${PROJECT_NAME}
     "main.cpp"
@@ -31,13 +29,25 @@ add_executable(${PROJECT_NAME}
     "gltfIO.cpp"
     "vtkIO.h"
     "vtkIO.cpp"
-    "zipManager.h"
-    "zipManager.cpp"
+    "filesManager.h"
+    "filesManager.cpp"
     "facetIO.h"
     "facetIO.cpp"
     "point.hpp"
     "ctmIO.h"
     "ctmIO.cpp"
+    "byuIO.h"
+    "byuIO.cpp"
+    "demIO.h"
+    "demIO.cpp"
+    "tiffIO.h"
+    "tiffIO.cpp"
+    "3DSIO.h"
+    "3DSIO.cpp"
+    "x3dIO.h"
+    "x3dIO.cpp"
+    "wrlIO.h"
+    "wrlIO.cpp"
     )
 
-target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} openctm )
+target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} openctm Zipper)

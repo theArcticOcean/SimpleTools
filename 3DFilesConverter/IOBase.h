@@ -12,11 +12,10 @@ class IOBase
 public:
     IOBase();
     virtual ~IOBase();
-    virtual void Read(std::string filePath){}
+    virtual bool Read(std::string filePath){ return true; }
     vtkSmartPointer<vtkPolyData> GetData();
-    virtual void Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){}
-    static std::string GetBaseName(std::string filePath);
-    static int RemoveDir(const char *dir);
+    virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath ){ return ""; }
+
 protected:
     vtkSmartPointer<vtkPolyData> m_Data;
 };

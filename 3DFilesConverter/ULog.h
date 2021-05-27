@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-#define DEBUG_OFF 1
+#define DEBUG_OFF 0
 
 #if DEBUG_OFF
     #define Log( Level, ... )

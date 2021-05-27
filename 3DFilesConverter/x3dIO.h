@@ -6,11 +6,11 @@
 
 #include "IOBase.h"
 
-class plyIO: public IOBase
+class x3dIO: public IOBase
 {
 public:
-    plyIO();
-    ~plyIO();
+    x3dIO();
+    ~x3dIO();
     virtual bool Read(std::string filePath);
     virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
 };

@@ -6,11 +6,11 @@
 
 #include "IOBase.h"
 
-class plyIO: public IOBase
+class byuIO: public IOBase
 {
 public:
-    plyIO();
-    ~plyIO();
+    byuIO();
+    ~byuIO();
     virtual bool Read(std::string filePath);
     virtual std::string Write( vtkSmartPointer<vtkPolyData> data, std::string filePath );
 };

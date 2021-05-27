@@ -2,7 +2,10 @@
 
 #include <vtkFacetWriter.h>
 #include <vtkFacetReader.h>
+#ifdef Q_OS_UNIX
 #include <unistd.h>
+#endif
+#include <QFileInfo>
 
 facetIO::facetIO()
 {
@@ -27,7 +30,8 @@ bool facetIO::Read(std::string filePath)
 
 std::string facetIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
-    if ( access( filePath.c_str(), F_OK ) == 0 )
+    QFileInfo file( filePath.c_str() );
+    if( file.exists() )
     {
         Log( IInfo, "start to remove exist file" );
         filesManager::GetInstance()->RemoveDir( filePath.c_str() );

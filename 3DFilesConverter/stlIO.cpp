@@ -4,7 +4,10 @@
 
 #include <vtkSTLReader.h>
 #include <vtkSTLWriter.h>
+#ifdef Q_OS_UNIX
 #include <unistd.h>
+#endif
+#include <QFileInfo>
 
 stlIO::stlIO()
 {
@@ -29,7 +32,8 @@ bool stlIO::Read(std::string filePath)
 
 std::string stlIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
-    if ( access( filePath.c_str(), F_OK ) == 0 )
+    QFileInfo file( filePath.c_str() );
+    if( file.exists() )
     {
         Log( IInfo, "start to remove exist file" );
         filesManager::GetInstance()->RemoveDir( filePath.c_str() );

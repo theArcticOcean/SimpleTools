@@ -3,10 +3,12 @@
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkRenderer.h>
-#include <vtkRenderWindow.h>
 #include <sys/stat.h>
 #include <stdio.h>
+
+#ifdef Q_OS_UNIX
 #include <unistd.h>
+#endif
 
 #include "ULog.h"
 #include "stlIO.h"
@@ -14,11 +16,9 @@
 #include "plyIO.h"
 #include "vtpIO.h"
 #include "vtkIO.h"
-#include "gltfIO.h"
 #include "facetIO.h"
 #include "filesManager.h"
 #include "ctmIO.h"
-#include "byuIO.h"
 #include "demIO.h"
 #include "tiffIO.h"
 #include "3DSIO.h"
@@ -103,10 +103,6 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new vtkIO();
     }
-    else if( old_suffix == "gltf" )
-    {
-        reader = new gltfIO();
-    }
     else if( old_suffix == "facet" )
     {
         reader = new facetIO();
@@ -114,10 +110,6 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     else if( old_suffix == "ctm" )
     {
         reader = new ctmIO();
-    }
-    else if( old_suffix == "byu" )
-    {
-        reader = new byuIO();
     }
     else if( old_suffix == "dem" )
     {
@@ -155,10 +147,6 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     {
         writer = new vtkIO();
     }
-    else if( new_suffix == "gltf" )
-    {
-        writer = new gltfIO();
-    }
     else if( new_suffix == "facet" )
     {
         writer = new facetIO();
@@ -166,10 +154,6 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     else if( new_suffix == "ctm" )
     {
         writer = new ctmIO();
-    }
-    else if( new_suffix == "byu" )
-    {
-        writer = new byuIO();
     }
     else if( new_suffix == "dem" )
     {

@@ -2,8 +2,11 @@
 #include "ULog.h"
 
 #include <sys/stat.h>
+#ifdef Q_OS_UNIX
 #include <dirent.h>
 #include <unistd.h>
+#endif
+
 #include <fcntl.h>
 
 IOBase::IOBase()

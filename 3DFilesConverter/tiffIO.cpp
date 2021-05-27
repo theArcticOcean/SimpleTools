@@ -4,6 +4,10 @@
 
 #include <vtkTIFFWriter.h>
 #include <vtkTIFFReader.h>
+
+#include <QFileInfo>
+
+
 tiffIO::tiffIO()
 {
 
@@ -30,7 +34,8 @@ bool tiffIO::Read(std::string filePath)
 
 std::string tiffIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
-    if ( access( filePath.c_str(), F_OK ) == 0 )
+    QFileInfo file( filePath.c_str() );
+    if( file.exists() )
     {
         Log( IInfo, "start to remove exist file" );
         filesManager::GetInstance()->RemoveDir( filePath.c_str() );

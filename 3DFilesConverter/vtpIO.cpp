@@ -4,7 +4,12 @@
 
 #include <vtkXMLPolyDataReader.h>
 #include <vtkXMLPolyDataWriter.h>
+
+#ifdef Q_OS_UNIX
 #include <unistd.h>
+#endif
+
+#include <QDir>
 #include <sys/stat.h>
 
 vtpIO::vtpIO()
@@ -31,19 +36,21 @@ bool vtpIO::Read(std::string filePath)
 std::string vtpIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     auto baseName = filesManager::GetInstance()->GetBaseName( filePath );
-    if ( access( baseName.c_str(), F_OK ) == 0 )
+    QDir dir(baseName.c_str());
+    if( dir.exists() )
     {
         Log( IInfo, "start to remove dir" );
         filesManager::GetInstance()->RemoveDir( baseName.c_str() );
     }
-    if ( mkdir( baseName.c_str(), 0777) )
+    if ( dir.mkdir( baseName.c_str() ) )
     {
         Log( IError, strerror(errno) );
         return INVALID_FILE;
     }
     auto newFilePath = baseName + "/result.vtp";
 
-    if ( access( newFilePath.c_str(), F_OK ) == 0 )
+    QFileInfo file( newFilePath.c_str() );
+    if( file.exists() )
     {
         Log( IInfo, "start to remove exist file" );
         filesManager::GetInstance()->RemoveDir( newFilePath.c_str() );
@@ -54,7 +61,5 @@ std::string vtpIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath
     writer->SetFileName( newFilePath.c_str() );
     writer->Write();
 
-    auto zipFilePath = filesManager::GetInstance()->zip( newFilePath );
-
-    return zipFilePath;
+    return newFilePath;
 }

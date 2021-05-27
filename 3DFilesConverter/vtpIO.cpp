@@ -36,18 +36,7 @@ bool vtpIO::Read(std::string filePath)
 std::string vtpIO::Write(vtkSmartPointer<vtkPolyData> data, std::string filePath)
 {
     auto baseName = filesManager::GetInstance()->GetBaseName( filePath );
-    QDir dir(baseName.c_str());
-    if( dir.exists() )
-    {
-        Log( IInfo, "start to remove dir" );
-        filesManager::GetInstance()->RemoveDir( baseName.c_str() );
-    }
-    if ( dir.mkdir( baseName.c_str() ) )
-    {
-        Log( IError, strerror(errno) );
-        return INVALID_FILE;
-    }
-    auto newFilePath = baseName + "/result.vtp";
+    auto newFilePath = baseName + ".vtp";
 
     QFileInfo file( newFilePath.c_str() );
     if( file.exists() )

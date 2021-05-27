@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cctype>
+#include <algorithm>
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkRenderer.h>
@@ -24,59 +26,90 @@
 #include "3DSIO.h"
 #include "x3dIO.h"
 #include "wrlIO.h"
+
+#include <QDir>
 using namespace std;
 
 void ChooseReader( IOBase *&reader, std::string old_suffix );
 void ChooseWriter( IOBase *&writer, std::string new_suffix );
 void FreePointer( IOBase *&ptr );
 
-// parameters: exe_path file_name old_suffix new_suffix.
+// parameters: exe_path folderPath old_suffix new_suffix.
+
 int main( int argc, char **argv )
 {
     if( argc < 4 )
     {
-        fprintf( stderr, "please use command format: exe_path file_name old_suffix new_suffix.\n" );
+        fprintf( stderr, "please use command format: exe_path folderPath old_suffix new_suffix.\n" );
         return -1;
     }
-    string file_name( argv[1] );
+
+    string folderPath( argv[1] );
     string old_suffix( argv[2] );
     string new_suffix( argv[3] );
-    Log( IInfo, file_name, ", ", old_suffix, ", ", new_suffix );
-    IOBase *reader = nullptr;
-    IOBase *writer = nullptr;
-    vtkDataObject *data = nullptr;
-    ChooseReader( reader, old_suffix );
-    ChooseWriter( writer, new_suffix );
-    Log( IInfo, reader, ", ", writer );
 
-    if( reader && writer )
+    Log( IInfo, folderPath, ", ", old_suffix, ", ", new_suffix );
+
+    QDir directory( folderPath.c_str() );
+    QString strFilter = "*.";
+    std::transform( old_suffix.begin(), old_suffix.end(), old_suffix.begin(), toupper );
+    strFilter = strFilter + old_suffix.c_str();
+
+    QStringList filters;
+    filters << strFilter;
+
+    strFilter = "*.";
+    std::transform( old_suffix.begin(), old_suffix.end(), old_suffix.begin(), tolower );
+    strFilter + old_suffix.c_str();
+
+    filters << strFilter;
+
+    QStringList simpleFiles = directory.entryList( filters, QDir::Files );
+    foreach( QString sfilename, simpleFiles )
     {
-        std::string folder;
-        if( !reader->Read( file_name ) )
+        QString file_name = QString("") + folderPath.c_str();
+        if( !file_name.endsWith( '/' ) )
         {
-            Log( IError, "read filed: ", old_suffix );
-            std::cout << INVALID_FILE << endl;
-            return -1;
+            file_name = file_name + "/";
+        }
+        file_name = file_name + sfilename;
+
+        Log( IInfo, file_name.toStdString(), ", ", old_suffix, ", ", new_suffix );
+        IOBase *reader = nullptr;
+        IOBase *writer = nullptr;
+        vtkDataObject *data = nullptr;
+        ChooseReader( reader, old_suffix );
+        ChooseWriter( writer, new_suffix );
+        Log( IInfo, reader, ", ", writer );
+
+        if( reader && writer )
+        {
+            if( !reader->Read( file_name.toLocal8Bit().data() ) )
+            {
+                Log( IError, "read filed: ", old_suffix );
+                std::cout << INVALID_FILE << endl;
+                return -1;
+            }
+
+            data = reader->GetData();
+
+            std::string baseName = filesManager::GetInstance()->GetBaseName( file_name.toLocal8Bit().data() );
+            std::string newFilePath = baseName + "." + new_suffix;
+            newFilePath = writer->Write( (vtkPolyData*)data, newFilePath );
+            if( newFilePath.length() < 1 )
+            {
+                Log( IError, "write failed: ", newFilePath );
+                std::cout << INVALID_FILE << endl;
+                return -1;
+            }
+
+            Log( IInfo, newFilePath );
+            std::cout << newFilePath << std::endl;
         }
 
-        data = reader->GetData();
-
-        std::string baseName = filesManager::GetInstance()->GetBaseName( file_name );
-        std::string newFilePath = baseName + "." + new_suffix;
-        newFilePath = writer->Write( (vtkPolyData*)data, newFilePath );
-        if( newFilePath.length() < 1 )
-        {
-            Log( IError, "write failed: ", newFilePath );
-            std::cout << INVALID_FILE << endl;
-            return -1;
-        }
-
-        Log( IInfo, newFilePath );
-        std::cout << newFilePath << std::endl;
+        FreePointer( reader );
+        FreePointer( writer );
     }
-
-    FreePointer( reader );
-    FreePointer( writer );
     return 0;
 }
 
@@ -107,7 +140,7 @@ void ChooseReader( IOBase *&reader, std::string old_suffix )
     {
         reader = new facetIO();
     }
-    else if( old_suffix == "ctm" )
+    else if( old_suffix == "ctm" || old_suffix == "mtc" )
     {
         reader = new ctmIO();
     }
@@ -151,7 +184,7 @@ void ChooseWriter( IOBase *&writer, std::string new_suffix )
     {
         writer = new facetIO();
     }
-    else if( new_suffix == "ctm" )
+    else if( new_suffix == "ctm" || new_suffix == "mtc" )
     {
         writer = new ctmIO();
     }

@@ -8,15 +8,9 @@ include( ${VTK_USE_FILE} )
 find_package(Qt5 COMPONENTS Core REQUIRED QUIET )
 
 set(OpenCTMDir thirdparty/OpenCTMLib)
-#set(ZLIBDir thirdparty/zlib_1_2_11)
-
-
 
 include_directories(
     ${OpenCTMDir}
-#    ${ZLIBDir}
-#    ${ZLIBDir}/make/include
-#    ${ZLIBDir}/contrib/minizip
     )
 
 link_directories(
@@ -61,10 +55,4 @@ add_executable(${PROJECT_NAME}
 
 qt5_use_modules( ${PROJECT_NAME} Core )
 
-#set_property(TARGET zlib PROPERTY IMPORTED_LOCATION_RELEASE ${ZLibBuildPath}/lib/zlib.lib)
-#set_property(TARGET zlib PROPERTY IMPORTED_LOCATION_DEBUG   ${ZLibBuildPath}/lib/zlibd.lib)
-
 target_link_libraries( ${PROJECT_NAME} ${VTK_LIBRARIES} openctm )
-
-#add_library(zlib STATIC IMPORTED)
-
